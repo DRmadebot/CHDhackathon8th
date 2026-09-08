@@ -23,11 +23,11 @@ export default function InvestigationCreate({ onSuccess, onCancel }) {
 
   const handleSubmit = async () => {
     if (!formData.investigation_id.trim()) {
-      setError('Investigation ID is required');
+      setError(t('Investigation ID is required'));
       return;
     }
     if (!formData.title.trim()) {
-      setError('Title is required');
+      setError(t('Title is required'));
       return;
     }
 
@@ -42,7 +42,7 @@ export default function InvestigationCreate({ onSuccess, onCancel }) {
         case_type: formData.case_type.trim() || null,
         unit: formData.unit.trim() || null
       });
-      setSuccess('Investigation created successfully!');
+      setSuccess(t('Investigation created successfully!'));
       setTimeout(() => onSuccess(), 1200);
     } catch (err) {
       setError(err.message);
@@ -88,7 +88,7 @@ export default function InvestigationCreate({ onSuccess, onCancel }) {
               type="text"
               value={formData.investigation_id}
               onChange={(e) => setFormData({ ...formData, investigation_id: e.target.value.toUpperCase() })}
-              placeholder="E.g., INV-2026-042"
+              placeholder={t('E.g., INV-2026-042')}
               className="w-full mt-1 bg-card border border-border/60 rounded px-3 py-2 text-xs font-mono"
             />
           </div>
@@ -101,7 +101,7 @@ export default function InvestigationCreate({ onSuccess, onCancel }) {
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              placeholder="Brief descriptive title"
+              placeholder={t('Brief descriptive title')}
               className="w-full mt-1 bg-card border border-border/60 rounded px-3 py-2 text-xs"
             />
           </div>
@@ -111,7 +111,7 @@ export default function InvestigationCreate({ onSuccess, onCancel }) {
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Scope, initial intelligence, objectives..."
+              placeholder={t('Scope, initial intelligence, objectives...')}
               className="w-full mt-1 bg-card border border-border/60 rounded px-3 py-2 text-xs h-16 resize-none"
             />
           </div>
@@ -123,7 +123,7 @@ export default function InvestigationCreate({ onSuccess, onCancel }) {
                 type="text"
                 value={formData.case_type}
                 onChange={(e) => setFormData({ ...formData, case_type: e.target.value })}
-                placeholder="E.g., Drug Trafficking"
+                placeholder={t('E.g., Drug Trafficking')}
                 className="w-full mt-1 bg-card border border-border/60 rounded px-3 py-2 text-xs"
               />
             </div>
@@ -148,7 +148,7 @@ export default function InvestigationCreate({ onSuccess, onCancel }) {
               type="text"
               value={formData.unit}
               onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
-              placeholder="E.g., Cyber Crime Cell, Chandigarh"
+              placeholder={t('E.g., Cyber Crime Cell, Chandigarh')}
               className="w-full mt-1 bg-card border border-border/60 rounded px-3 py-2 text-xs"
             />
           </div>

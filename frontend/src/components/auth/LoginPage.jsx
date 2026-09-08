@@ -24,9 +24,9 @@ export default function LoginPage({ onSwitchToRegister }) {
     } catch (err) {
       if (err.message === 'MFA_REQUIRED') {
         setMfaRequired(true);
-        setError('Two-Factor Authentication code required');
+        setError(t('Two-Factor Authentication code required'));
       } else {
-        setError(err.message || 'Authentication failed. Please check your credentials.');
+        setError(err.message || t('Authentication failed. Please check your credentials.'));
       }
     } finally {
       setLoading(false);
@@ -50,7 +50,7 @@ export default function LoginPage({ onSwitchToRegister }) {
             DarKnight
           </h1>
           <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
-            Chandigarh Police Law Enforcement Intelligence
+            {t('Chandigarh Police Law Enforcement Intelligence')}
           </p>
         </div>
 

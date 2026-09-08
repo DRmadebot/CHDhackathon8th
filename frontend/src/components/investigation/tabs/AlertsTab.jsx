@@ -55,7 +55,7 @@ export default function AlertsTab({ investigationId, canManage }) {
   };
 
   const handleCreate = () => {
-    if (!form.title.trim()) { setError('Alert title is required.'); return; }
+    if (!form.title.trim()) { setError(t('Alert title is required.')); return; }
     triggerReAuth(async () => {
       setActionLoading('create');
       setError('');
@@ -65,7 +65,7 @@ export default function AlertsTab({ investigationId, canManage }) {
           severity: form.severity,
           description: form.description.trim() || undefined,
         });
-        showSuccessMsg('Alert created.');
+        showSuccessMsg(t('Alert created.'));
         setForm({ title: '', severity: 'MEDIUM', description: '' });
         setShowCreate(false);
         loadAlerts();
@@ -83,7 +83,7 @@ export default function AlertsTab({ investigationId, canManage }) {
       setError('');
       try {
         await resolveAlert(investigationId, alertId);
-        showSuccessMsg('Alert resolved.');
+        showSuccessMsg(t('Alert resolved.'));
         loadAlerts();
       } catch (err) {
         setError(err.message);
@@ -131,7 +131,7 @@ export default function AlertsTab({ investigationId, canManage }) {
         <div className="p-4 bg-card/60 border border-border/60 rounded space-y-2 text-xs">
           <input
             type="text"
-            placeholder="Alert title (required)"
+            placeholder={t('Alert title (required)')}
             value={form.title}
             onChange={(e) => setForm({ ...form, title: e.target.value })}
             className="w-full bg-background border border-border/60 rounded px-2 py-1.5 text-xs"
@@ -146,15 +146,15 @@ export default function AlertsTab({ investigationId, canManage }) {
             ))}
           </select>
           <textarea
-            placeholder="Description (optional)"
+            placeholder={t('Description (optional)')}
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
             className="w-full bg-background border border-border/60 rounded px-2 py-1.5 text-xs h-16 resize-none"
           />
           <div className="flex gap-2 justify-end">
-            <Button size="sm" variant="ghost" onClick={() => setShowCreate(false)} className="text-xs h-7">Cancel</Button>
+            <Button size="sm" variant="ghost" onClick={() => setShowCreate(false)} className="text-xs h-7">{t('Cancel')}</Button>
             <Button size="sm" onClick={handleCreate} disabled={actionLoading === 'create'} className="text-xs h-7">
-              Create Alert
+              {t('Create Alert')}
             </Button>
           </div>
         </div>
@@ -207,7 +207,7 @@ export default function AlertsTab({ investigationId, canManage }) {
                     disabled={actionLoading === a.id}
                     className="h-6 text-[10px] flex-shrink-0 border-emerald-700 text-emerald-400"
                   >
-                    {actionLoading === a.id ? '...' : 'Resolve'}
+                    {actionLoading === a.id ? '...' : t('Resolve')}
                   </Button>
                 )}
               </div>

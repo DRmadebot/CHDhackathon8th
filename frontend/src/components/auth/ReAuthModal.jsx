@@ -25,12 +25,12 @@ export default function ReAuthModal() {
         body: JSON.stringify({ password })
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.detail || 'Re-authentication failed');
+      if (!res.ok) throw new Error(data.detail || t('Re-authentication failed'));
 
       setPassword('');
       handleReAuthSuccess();
     } catch (err) {
-      setError(err.message || 'Incorrect password');
+      setError(err.message || t('Incorrect password'));
     } finally {
       setLoading(false);
     }
@@ -57,7 +57,7 @@ export default function ReAuthModal() {
         </div>
 
         <p className="text-xs text-muted-foreground leading-relaxed">
-          For operational security, please confirm your identity by re-entering your account password before proceeding.
+          {t('For operational security, please confirm your identity by re-entering your account password before proceeding.')}
         </p>
 
         {error && (

@@ -121,7 +121,7 @@ function Dashboard() {
                   <span className="font-bold text-foreground">{user.full_name}</span>
                   <span className="text-[10px] text-primary">{user.role}</span>
                 </div>
-                <Button variant="ghost" size="icon" onClick={logout} title="Secure Logout" className="h-7 w-7 text-muted-foreground hover:text-destructive">
+                <Button variant="ghost" size="icon" onClick={logout} title={t('Secure Logout')} className="h-7 w-7 text-muted-foreground hover:text-destructive">
                   <LogOut className="w-4 h-4" />
                 </Button>
               </div>
@@ -186,6 +186,7 @@ function Dashboard() {
 }
 
 export default function App() {
+  const { t } = useTranslation();
   const [booting, setBooting] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
   const { isAuthenticated, isLoading } = useAuth();

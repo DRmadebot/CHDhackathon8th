@@ -35,7 +35,7 @@ export default function KeywordsTab({ investigationId, canManage }) {
 
   const handleAddKeyword = async () => {
     if (!newKeywordId.trim()) {
-      setError('Please enter a keyword ID');
+      setError(t('Please enter a keyword ID'));
       return;
     }
 
@@ -44,7 +44,7 @@ export default function KeywordsTab({ investigationId, canManage }) {
       setError('');
       try {
         await addKeywordToInvestigation(investigationId, newKeywordId.trim());
-        setSuccess('Case keyword added successfully');
+        setSuccess(t('Case keyword added successfully'));
         setNewKeywordId('');
         setShowAddForm(false);
         loadKeywords();
@@ -58,14 +58,14 @@ export default function KeywordsTab({ investigationId, canManage }) {
   };
 
   const handleRemoveKeyword = async (keywordId, keywordText) => {
-    if (!window.confirm(`Deactivate keyword "${keywordText || keywordId}" for this case?`)) return;
+    if (!window.confirm(t('Deactivate keyword "{{keyword}}" for this case?', { keyword: keywordText || keywordId }))) return;
 
     triggerReAuth(async () => {
       setActionLoading(true);
       setError('');
       try {
         await removeKeywordFromInvestigation(investigationId, keywordId);
-        setSuccess('Case keyword deactivated');
+        setSuccess(t('Case keyword deactivated'));
         loadKeywords();
         setTimeout(() => setSuccess(''), 3000);
       } catch (err) {
@@ -117,18 +117,18 @@ export default function KeywordsTab({ investigationId, canManage }) {
       {/* Add Keyword Form */}
       {showAddForm && canManage && (
         <div className="p-3 bg-card/60 border border-border/60 rounded space-y-2 font-mono">
-          <label className="text-[10px] uppercase text-muted-foreground">Global Keyword ID (UUID or ID string)</label>
+          <label className="text-[10px] uppercase text-muted-foreground">{t('Global Keyword ID (UUID or ID string)')}</label>
           <div className="flex gap-2">
             <input
               type="text"
               value={newKeywordId}
               onChange={(e) => setNewKeywordId(e.target.value)}
-              placeholder="Keyword ID"
+              placeholder={t('Keyword ID')}
               className="flex-1 bg-background border border-border/60 rounded px-2 py-1 text-xs"
               onKeyDown={(e) => e.key === 'Enter' && handleAddKeyword()}
             />
             <Button size="sm" onClick={handleAddKeyword} disabled={actionLoading} className="text-xs">
-              Add
+              {t('Add')}
             </Button>
           </div>
         </div>

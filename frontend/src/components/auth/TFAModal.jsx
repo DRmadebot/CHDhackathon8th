@@ -33,7 +33,7 @@ export default function TFAModal({ onClose, onComplete }) {
         headers: { 'Accept': 'application/json' }
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.detail || '2FA setup failed');
+      if (!res.ok) throw new Error(data.detail || t('2FA setup failed'));
       setSetupData(data);
       setStep('verify');
     } catch (err) {
@@ -61,7 +61,7 @@ export default function TFAModal({ onClose, onComplete }) {
         body: JSON.stringify({ code: verifyCode })
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.detail || '2FA verification failed');
+      if (!res.ok) throw new Error(data.detail || t('2FA verification failed'));
       onComplete();
     } catch (err) {
       setError(err.message);
@@ -124,7 +124,7 @@ export default function TFAModal({ onClose, onComplete }) {
           <div className="space-y-4 text-center py-4">
             <ShieldCheck className="w-12 h-12 text-amber-500 mx-auto" />
             <p className="text-xs text-muted-foreground font-mono leading-relaxed">
-              Enhance your law-enforcement portal account with TOTP 2FA. You will need a standard authenticator app (Google Authenticator, Microsoft Authenticator, or Aegis).
+              {t('Enhance your law-enforcement portal account with TOTP 2FA. You will need a standard authenticator app (Google Authenticator, Microsoft Authenticator, or Aegis).')}
             </p>
             <Button onClick={startSetup} disabled={loading} className="w-full font-mono gap-2">
               {loading ? t('Initializing...') : t('Generate 2FA Credentials')}

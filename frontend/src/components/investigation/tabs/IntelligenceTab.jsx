@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { listInvestigationIntelligence, getIntelligenceDetail, reviewIntelligence, listInvestigationFindings } from '../../../api/investigationIntelligenceApi';
 import { Button } from '../../ui/button';
 import { AlertCircle, CheckCircle, Eye, ThumbsUp, ThumbsDown, ArrowLeft, RefreshCw, FileText } from 'lucide-react';
 import { Search } from 'lucide-react';
 
 export default function IntelligenceTab({ investigationId, canManage }) {
+  const { t } = useTranslation();
   const [records, setRecords] = useState([]);
   const [findings, setFindings] = useState([]);
   const [selectedRecord, setSelectedRecord] = useState(null);
@@ -60,7 +62,7 @@ export default function IntelligenceTab({ investigationId, canManage }) {
     setError('');
     try {
       await reviewIntelligence(investigationId, selectedRecord.raw_record_id, statusVal, reviewNotes);
-      setSuccess(`Intelligence marked as ${statusVal}`);
+      setSuccess(t('Intelligence marked as {{status}}', { status: statusVal }));
       setSelectedRecord(null);
       setSelectedRecordDetail(null);
       loadIntelligence();
@@ -78,7 +80,7 @@ export default function IntelligenceTab({ investigationId, canManage }) {
         {/* Record Detail Header */}
         <div className="flex items-center justify-between border-b border-border/40 pb-2">
           <div className="flex items-center gap-2">
-            <h3 className="font-bold text-sm text-primary uppercase">Intelligence Detail</h3>
+            <h3 className="font-bold text-sm text-primary uppercase">{t('Intelligence Detail')}</h3>
             <span className="text-xs text-muted-foreground">[{selectedRecordDetail.raw_record_id}]</span>
           </div>
           <Button
@@ -87,7 +89,7 @@ export default function IntelligenceTab({ investigationId, canManage }) {
             onClick={() => { setSelectedRecord(null); setSelectedRecordDetail(null); }}
             className="h-7 gap-1 text-xs"
           >
-            <ArrowLeft className="w-3 h-3" /> Back
+            <ArrowLeft className="w-3 h-3" /> {t('Back')}
           </Button>
         </div>
 
@@ -109,28 +111,28 @@ export default function IntelligenceTab({ investigationId, canManage }) {
         <div className="p-4 bg-card/40 border border-border/50 rounded space-y-3 text-xs">
           <dl className="grid grid-cols-2 gap-x-6 gap-y-1.5">
             <div>
-              <dt className="text-muted-foreground text-[10px] uppercase">URL / Source</dt>
+              <dt className="text-muted-foreground text-[10px] uppercase">{t('URL / Source')}</dt>
               <dd className="text-foreground truncate">{selectedRecordDetail.url || 'N/A'}</dd>
             </div>
             <div>
-              <dt className="text-muted-foreground text-[10px] uppercase">Fetched At</dt>
+              <dt className="text-muted-foreground text-[10px] uppercase">{t('Fetched At')}</dt>
               <dd>{selectedRecordDetail.fetched_at ? new Date(selectedRecordDetail.fetched_at).toLocaleString('en-IN') : 'N/A'}</dd>
             </div>
             <div>
-              <dt className="text-muted-foreground text-[10px] uppercase">Language</dt>
+              <dt className="text-muted-foreground text-[10px] uppercase">{t('Language')}</dt>
               <dd>{selectedRecordDetail.language || 'N/A'}</dd>
             </div>
             <div>
-              <dt className="text-muted-foreground text-[10px] uppercase">AI Relevance</dt>
+              <dt className="text-muted-foreground text-[10px] uppercase">{t('AI Relevance')}</dt>
               <dd>{selectedRecordDetail.relevance_label || 'N/A'} {selectedRecordDetail.relevance_confidence ? `(${selectedRecordDetail.relevance_confidence})` : ''}</dd>
             </div>
             <div className="col-span-2">
-              <dt className="text-muted-foreground text-[10px] uppercase">Matched Keywords</dt>
+              <dt className="text-muted-foreground text-[10px] uppercase">{t('Matched Keywords')}</dt>
               <dd className="text-primary">{selectedRecordDetail.matched_keywords || 'None'}</dd>
             </div>
             {selectedRecordDetail.review_status && (
               <div>
-                <dt className="text-muted-foreground text-[10px] uppercase">Current Review Status</dt>
+                <dt className="text-muted-foreground text-[10px] uppercase">{t('Current Review Status')}</dt>
                 <dd className={selectedRecordDetail.review_status === 'RELEVANT' ? 'text-green-400 font-bold' : selectedRecordDetail.review_status === 'DISMISSED' ? 'text-red-400 font-bold' : 'text-blue-400'}>
                   [{selectedRecordDetail.review_status}]
                 </dd>
@@ -138,7 +140,7 @@ export default function IntelligenceTab({ investigationId, canManage }) {
             )}
             {selectedRecordDetail.reviewed_by_email && (
               <div>
-                <dt className="text-muted-foreground text-[10px] uppercase">Reviewed By</dt>
+                <dt className="text-muted-foreground text-[10px] uppercase">{t('Reviewed By')}</dt>
                 <dd>{selectedRecordDetail.reviewed_by_email}</dd>
               </div>
             )}
@@ -146,7 +148,7 @@ export default function IntelligenceTab({ investigationId, canManage }) {
 
           {/* Cleaned Excerpt */}
           <div className="pt-2 border-t border-border/40">
-            <label className="text-[10px] text-muted-foreground uppercase block mb-1">Cleaned Intelligence Excerpt</label>
+            <label className="text-[10px] text-muted-foreground uppercase block mb-1">{t('Cleaned Intelligence Excerpt')}</label>
             <div className="p-3 bg-background border border-border/60 rounded text-[11px] max-h-40 overflow-y-auto whitespace-pre-wrap">
               {selectedRecordDetail.cleaned_text || selectedRecordDetail.raw_text_excerpt || 'No excerpt available.'}
             </div>
@@ -156,13 +158,13 @@ export default function IntelligenceTab({ investigationId, canManage }) {
         {/* Investigator Decision Card */}
         {canManage && (
           <div className="p-4 bg-card/60 border border-border/60 rounded space-y-3">
-            <h4 className="font-bold text-xs uppercase text-muted-foreground">Investigator Review Decision</h4>
+            <h4 className="font-bold text-xs uppercase text-muted-foreground">{t('Investigator Review Decision')}</h4>
             <div>
-              <label className="text-[10px] text-muted-foreground uppercase block mb-1">Review Notes</label>
+              <label className="text-[10px] text-muted-foreground uppercase block mb-1">{t('Review Notes')}</label>
               <textarea
                 value={reviewNotes}
                 onChange={(e) => setReviewNotes(e.target.value)}
-                placeholder="Contextual reasoning for this review decision..."
+                placeholder={t('Contextual reasoning for this review decision...')}
                 className="w-full bg-background border border-border/60 rounded px-2 py-1.5 text-xs h-16 resize-none"
               />
             </div>
@@ -173,7 +175,7 @@ export default function IntelligenceTab({ investigationId, canManage }) {
                 disabled={actionLoading}
                 className="flex-1 gap-1 text-xs bg-emerald-600 hover:bg-emerald-700"
               >
-                <ThumbsUp className="w-3.5 h-3.5" /> Mark Relevant
+                <ThumbsUp className="w-3.5 h-3.5" /> {t('Mark Relevant')}
               </Button>
               <Button
                 size="sm"
@@ -182,7 +184,7 @@ export default function IntelligenceTab({ investigationId, canManage }) {
                 variant="outline"
                 className="flex-1 gap-1 text-xs border-destructive/40 text-destructive hover:bg-destructive/10"
               >
-                <ThumbsDown className="w-3.5 h-3.5" /> Dismiss
+                <ThumbsDown className="w-3.5 h-3.5" /> {t('Dismiss')}
               </Button>
             </div>
           </div>
@@ -211,11 +213,11 @@ export default function IntelligenceTab({ investigationId, canManage }) {
                   <input
                     value={intelligenceQuery}
                     onChange={(event) => setIntelligenceQuery(event.target.value)}
-                    placeholder="Search this investigation by meaning or exact text..."
+                    placeholder={t('Search this investigation by meaning or exact text...')}
                     className="w-full bg-background border border-border/60 rounded px-8 py-1.5 text-xs"
                   />
                 </div>
-                <Button type="submit" size="sm" className="h-8 text-xs">Search</Button>
+                <Button type="submit" size="sm" className="h-8 text-xs">{t('Search')}</Button>
               </form>
         {['all', 'PENDING_REVIEW', 'RELEVANT', 'DISMISSED'].map((st) => (
           <Button
@@ -244,7 +246,7 @@ export default function IntelligenceTab({ investigationId, canManage }) {
         </div>
       ) : records.length === 0 ? (
         <div className="text-xs text-muted-foreground p-6 text-center border border-dashed border-border/40 rounded">
-          No raw intelligence records found for this investigation. Attach sources and trigger a crawl to populate.
+          {t('No raw intelligence records found for this investigation. Attach sources and trigger a crawl to populate.')}
         </div>
       ) : (
         <div className="space-y-2">

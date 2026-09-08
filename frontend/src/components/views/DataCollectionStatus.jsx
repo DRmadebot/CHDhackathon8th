@@ -765,7 +765,7 @@ export default function DataCollectionStatus() {
                 src.config?.url && (
                   <div className="mb-4 p-2.5 rounded-lg bg-blue-950/30 border border-blue-900/50">
                     <span className="text-muted-foreground block text-[10px] uppercase mb-1">
-                      Police API Endpoint:
+                      {t('Police API Endpoint:')}
                     </span>
 
                     <span className="text-blue-300 text-xs break-all">
@@ -779,7 +779,7 @@ export default function DataCollectionStatus() {
 
                 <div>
                   <span className="text-muted-foreground block text-[10px] uppercase">
-                    Poll Interval:
+                    {t('Poll Interval:')}
                   </span>
 
                   <span className="text-foreground font-medium">
@@ -789,7 +789,7 @@ export default function DataCollectionStatus() {
 
                 <div>
                   <span className="text-muted-foreground block text-[10px] uppercase">
-                    Crawl Delay Floor:
+                    {t('Crawl Delay Floor:')}
                   </span>
 
                   <span className="text-foreground font-medium">
@@ -803,7 +803,7 @@ export default function DataCollectionStatus() {
 
                 <div>
                   <span className="text-muted-foreground text-[11px]">
-                    Last Status:{' '}
+                    {t('Last Status:')}{' '}
                   </span>
 
                   <span
@@ -835,7 +835,7 @@ export default function DataCollectionStatus() {
                         src.last_run
                           .records_produced
                       }{' '}
-                      records)
+                      {t('records')})
                     </span>
                   )}
                 </div>

@@ -29,12 +29,12 @@ export default function RegisterPage({ onSwitchToLogin }) {
     setSuccessMsg('');
 
     if (formData.password.length < 12) {
-      setError('Password must be at least 12 characters long');
+      setError(t('Password must be at least 12 characters long'));
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      setError(t('Passwords do not match'));
       return;
     }
 
@@ -47,9 +47,9 @@ export default function RegisterPage({ onSwitchToLogin }) {
         badge_number: formData.badge_number,
         unit: formData.unit
       });
-      setSuccessMsg(res.message || 'Account registration submitted. Pending senior officer review.');
+      setSuccessMsg(res.message || t('Account registration submitted. Pending senior officer review.'));
     } catch (err) {
-      setError(err.message || 'Registration failed.');
+      setError(err.message || t('Registration failed.'));
     } finally {
       setLoading(false);
     }
@@ -179,7 +179,7 @@ export default function RegisterPage({ onSwitchToLogin }) {
             </div>
 
             <div className="p-3 bg-muted/30 border border-border/40 rounded-lg text-xs font-mono text-muted-foreground">
-              ℹ️ Role assignment and operational scope will be determined and assigned by a Senior Officer during account review.
+              ℹ️ {t('Role assignment and operational scope will be determined and assigned by a Senior Officer during account review.')}
             </div>
 
             <Button type="submit" disabled={loading} className="w-full gap-2 mt-4 font-mono">
