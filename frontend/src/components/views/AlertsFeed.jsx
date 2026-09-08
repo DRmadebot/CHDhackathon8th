@@ -69,9 +69,9 @@ function getSeverityBadge(severity) {
   }
   return {
     label: 'INFO',
-    badgeClass: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40',
-    cardClass: 'bg-emerald-500/5 border-emerald-500/30 text-foreground hover:border-emerald-500/50',
-    iconClass: 'text-emerald-500',
+    badgeClass: 'bg-[#E9F7EF] dark:bg-[#2E8B57]/20 text-[#2E8B57] dark:text-[#34D399] border border-[#A2E2BB] dark:border-[#2E8B57]/40',
+    cardClass: 'bg-[#E9F7EF]/40 border-[#A2E2BB] text-foreground',
+    iconClass: 'text-[#2E8B57] dark:text-[#34D399]',
   };
 }
 
@@ -85,7 +85,7 @@ function getStatusBadge(status) {
     return 'bg-blue-500/15 text-blue-400 border border-blue-500/30';
   }
   if (st === 'resolved') {
-    return 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30';
+    return 'bg-[#E9F7EF] dark:bg-[#2E8B57]/20 text-[#2E8B57] dark:text-[#34D399] border border-[#A2E2BB] dark:border-[#2E8B57]/30';
   }
   if (st === 'dismissed') {
     return 'bg-zinc-500/15 text-zinc-400 border border-zinc-500/30';
@@ -116,7 +116,7 @@ function CopyableId({ label, value }) {
       <span className="opacity-70">{label}:</span>
       <span className="font-semibold text-foreground truncate max-w-[140px]">{value}</span>
       {copied ? (
-        <Check className="w-3 h-3 text-emerald-400 flex-shrink-0" />
+        <Check className="w-3 h-3 text-[#2E8B57] dark:text-[#34D399] flex-shrink-0" />
       ) : (
         <Copy className="w-3 h-3 opacity-60 flex-shrink-0" />
       )}
@@ -381,11 +381,11 @@ export default function AlertsFeed() {
 
         {/* Info Alerts */}
         <div className="p-4 bracket-border bg-card/40 border border-border/40 flex flex-col gap-1 rounded-lg">
-          <span className="text-[11px] font-mono tracking-wider uppercase text-emerald-400 flex items-center gap-1.5 font-semibold">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+          <span className="text-[11px] font-mono tracking-wider uppercase text-[#2E8B57] dark:text-[#34D399] flex items-center gap-1.5 font-semibold">
+            <CheckCircle2 className="w-3.5 h-3.5 text-[#2E8B57] dark:text-[#34D399]" />
             {t('Info (Green)')}
           </span>
-          <span className="text-3xl font-black font-mono text-emerald-400 mt-1">
+          <span className="text-3xl font-black font-mono text-[#2E8B57] dark:text-[#34D399] mt-1">
             {displaySummary.info}
           </span>
           <span className="text-[10px] text-muted-foreground font-mono">

@@ -33,7 +33,7 @@ export default function EvidenceTab({ investigationId }) {
     <div className="space-y-4 font-mono">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <Database className="w-3.5 h-3.5 text-emerald-400" />
+          <Database className="w-3.5 h-3.5 text-[#1E4D8C] dark:text-[#3D7DC9]" />
           <span className="font-bold text-foreground">{total}</span> {t('evidence records')}
         </div>
         <Button size="sm" variant="ghost" onClick={loadEvidence} disabled={loading} className="h-7 gap-1 text-xs">
@@ -67,7 +67,7 @@ export default function EvidenceTab({ investigationId }) {
                   </span>
                 </div>
                 {e.promoted_at && (
-                  <span className="text-[10px] text-emerald-400 flex-shrink-0">
+                  <span className="text-[10px] text-[#2E8B57] dark:text-[#34D399] flex-shrink-0">
                     Promoted {new Date(e.promoted_at).toLocaleDateString('en-IN')}
                   </span>
                 )}

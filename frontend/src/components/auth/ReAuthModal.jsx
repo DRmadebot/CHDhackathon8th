@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { Lock, ShieldAlert, X, ArrowRight, AlertTriangle } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth } from '../../context/AuthContext';
-import { useTranslation } from 'react-i18next';
 
 export default function ReAuthModal() {
   const { reAuthRequired, handleReAuthSuccess, cancelReAuth } = useAuth();
-  const { t } = useTranslation();
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -25,12 +23,12 @@ export default function ReAuthModal() {
         body: JSON.stringify({ password })
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.detail || t('Re-authentication failed'));
+      if (!res.ok) throw new Error(data.detail || 'Re-authentication failed');
 
       setPassword('');
       handleReAuthSuccess();
     } catch (err) {
-      setError(err.message || t('Incorrect password'));
+      setError(err.message || 'Incorrect password');
     } finally {
       setLoading(false);
     }
@@ -51,13 +49,13 @@ export default function ReAuthModal() {
             <ShieldAlert className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="font-bold text-base uppercase text-amber-400">{t('Security Confirmation Required')}</h3>
-            <p className="text-xs text-muted-foreground">{t('High-Risk Sensitive Operation')}</p>
+            <h3 className="font-bold text-base uppercase text-amber-400">Security Confirmation Required</h3>
+            <p className="text-xs text-muted-foreground">High-Risk Sensitive Operation</p>
           </div>
         </div>
 
         <p className="text-xs text-muted-foreground leading-relaxed">
-          {t('For operational security, please confirm your identity by re-entering your account password before proceeding.')}
+          For operational security, please confirm your identity by re-entering your account password before proceeding.
         </p>
 
         {error && (
@@ -69,7 +67,7 @@ export default function ReAuthModal() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1">
-            <label className="text-xs uppercase text-muted-foreground">{t('Account Password')}</label>
+            <label className="text-xs uppercase text-muted-foreground">Account Password</label>
             <div className="relative">
               <Lock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
               <input
@@ -86,10 +84,10 @@ export default function ReAuthModal() {
 
           <div className="flex gap-2">
             <Button type="button" variant="outline" onClick={cancelReAuth} className="flex-1 text-xs">
-              {t('Cancel')}
+              Cancel
             </Button>
             <Button type="submit" disabled={loading} className="flex-1 text-xs gap-1 bg-amber-600 hover:bg-amber-700 text-white">
-              {loading ? t('Verifying...') : t('Authorize Action')} <ArrowRight className="w-4 h-4" />
+              {loading ? 'Verifying...' : 'Authorize Action'} <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
         </form>

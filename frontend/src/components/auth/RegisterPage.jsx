@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { Shield, Lock, Mail, User, ShieldCheck, AlertTriangle, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth } from '../../context/AuthContext';
-import { useTranslation } from 'react-i18next';
 
 export default function RegisterPage({ onSwitchToLogin }) {
   const { signup } = useAuth();
-  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -29,12 +27,12 @@ export default function RegisterPage({ onSwitchToLogin }) {
     setSuccessMsg('');
 
     if (formData.password.length < 12) {
-      setError(t('Password must be at least 12 characters long'));
+      setError('Password must be at least 12 characters long');
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError(t('Passwords do not match'));
+      setError('Passwords do not match');
       return;
     }
 
@@ -47,9 +45,9 @@ export default function RegisterPage({ onSwitchToLogin }) {
         badge_number: formData.badge_number,
         unit: formData.unit
       });
-      setSuccessMsg(res.message || t('Account registration submitted. Pending senior officer review.'));
+      setSuccessMsg(res.message || 'Account registration submitted. Pending senior officer review.');
     } catch (err) {
-      setError(err.message || t('Registration failed.'));
+      setError(err.message || 'Registration failed.');
     } finally {
       setLoading(false);
     }
@@ -66,25 +64,25 @@ export default function RegisterPage({ onSwitchToLogin }) {
             </div>
             <div>
               <h2 className="text-lg font-bold tracking-wider text-primary uppercase font-mono">
-                {t('Account Registration')}
+                Account Registration
               </h2>
-              <p className="text-xs text-muted-foreground font-mono">{t('Chandigarh Police Intelligence Portal')}</p>
+              <p className="text-xs text-muted-foreground font-mono">Chandigarh Police Intelligence Portal</p>
             </div>
           </div>
           <Button variant="ghost" size="sm" onClick={onSwitchToLogin} className="gap-1 font-mono text-xs">
-            <ArrowLeft className="w-4 h-4" /> {t('Back to Login')}
+            <ArrowLeft className="w-4 h-4" /> Back to Login
           </Button>
         </div>
 
         {successMsg ? (
-          <div className="p-6 bg-emerald-500/15 border border-emerald-500/40 rounded-xl space-y-4 text-center animate-in fade-in">
-            <CheckCircle2 className="w-12 h-12 text-emerald-500 mx-auto" />
-            <h3 className="text-lg font-bold text-emerald-400 font-mono">{t('Request Submitted Successfully')}</h3>
+          <div className="p-6 bg-primary/10 border border-primary/30 rounded-xl space-y-4 text-center animate-in fade-in">
+            <CheckCircle2 className="w-12 h-12 text-primary mx-auto" />
+            <h3 className="text-lg font-bold text-primary font-mono">Request Submitted Successfully</h3>
             <p className="text-xs text-muted-foreground font-mono leading-relaxed">
               {successMsg}
             </p>
             <Button onClick={onSwitchToLogin} className="w-full font-mono">
-              {t('Return to Login Screen')}
+              Return to Login Screen
             </Button>
           </div>
         ) : (
@@ -98,7 +96,7 @@ export default function RegisterPage({ onSwitchToLogin }) {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-xs font-mono uppercase text-muted-foreground">{t('Full Name')} *</label>
+                <label className="text-xs font-mono uppercase text-muted-foreground">Full Name *</label>
                 <input
                   type="text"
                   name="full_name"
@@ -111,7 +109,7 @@ export default function RegisterPage({ onSwitchToLogin }) {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-mono uppercase text-muted-foreground">{t('Badge Number')}</label>
+                <label className="text-xs font-mono uppercase text-muted-foreground">Badge Number</label>
                 <input
                   type="text"
                   name="badge_number"
@@ -125,7 +123,7 @@ export default function RegisterPage({ onSwitchToLogin }) {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-xs font-mono uppercase text-muted-foreground">{t('Official Email')} *</label>
+                <label className="text-xs font-mono uppercase text-muted-foreground">Official Email *</label>
                 <input
                   type="email"
                   name="email"
@@ -138,7 +136,7 @@ export default function RegisterPage({ onSwitchToLogin }) {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-mono uppercase text-muted-foreground">{t('Assigned Unit')}</label>
+                <label className="text-xs font-mono uppercase text-muted-foreground">Assigned Unit</label>
                 <input
                   type="text"
                   name="unit"
@@ -152,7 +150,7 @@ export default function RegisterPage({ onSwitchToLogin }) {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-xs font-mono uppercase text-muted-foreground">{t('Password (Min 12 Chars)')} *</label>
+                <label className="text-xs font-mono uppercase text-muted-foreground">Password (Min 12 Chars) *</label>
                 <input
                   type="password"
                   name="password"
@@ -165,7 +163,7 @@ export default function RegisterPage({ onSwitchToLogin }) {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-mono uppercase text-muted-foreground">{t('Confirm Password')} *</label>
+                <label className="text-xs font-mono uppercase text-muted-foreground">Confirm Password *</label>
                 <input
                   type="password"
                   name="confirmPassword"
@@ -179,11 +177,11 @@ export default function RegisterPage({ onSwitchToLogin }) {
             </div>
 
             <div className="p-3 bg-muted/30 border border-border/40 rounded-lg text-xs font-mono text-muted-foreground">
-              ℹ️ {t('Role assignment and operational scope will be determined and assigned by a Senior Officer during account review.')}
+              ℹ️ Role assignment and operational scope will be determined and assigned by a Senior Officer during account review.
             </div>
 
             <Button type="submit" disabled={loading} className="w-full gap-2 mt-4 font-mono">
-              {loading ? t('Submitting Request...') : t('Submit Operational Registration')}
+              {loading ? 'Submitting Request...' : 'Submit Operational Registration'}
             </Button>
           </form>
         )}

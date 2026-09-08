@@ -1,16 +1,6 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-} from 'react';
 import { registerAuthFailureHandler } from '../lib/apiClient';
-import API_BASE_URL from '../config/api';
-
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 const AuthContext = createContext(null);
-
-const AUTH_BASE_URL = `${API_BASE_URL}/api/auth`;
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -20,78 +10,59 @@ export const AuthProvider = ({ children }) => {
   const [reAuthRequired, setReAuthRequired] = useState(false);
   const [pendingReAuthCallback, setPendingReAuthCallback] = useState(null);
 
+  // Check current authentication session on app mount
   const checkAuth = useCallback(async () => {
     try {
       setIsLoading(true);
-
-      const response = await fetch(`${AUTH_BASE_URL}/me`, {
-        method: 'GET',
-        credentials: 'include',
+      const response = await fetch('/api/auth/me', {
         headers: {
-          Accept: 'application/json',
-        },
+          'Accept': 'application/json'
+        }
       });
-
       if (response.ok) {
         const data = await response.json();
-
         setUser(data.user);
         setIsAuthenticated(true);
-
         if (data.csrf_token) {
           setCsrfToken(data.csrf_token);
         }
       } else {
         setUser(null);
         setIsAuthenticated(false);
-        setCsrfToken('');
       }
     } catch (error) {
       console.error('Auth check error:', error);
       setUser(null);
       setIsAuthenticated(false);
-      setCsrfToken('');
     } finally {
       setIsLoading(false);
     }
   }, []);
-
+  
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
-
+  
   useEffect(() => {
-    registerAuthFailureHandler(() => {
-      setUser(null);
-      setIsAuthenticated(false);
-      setCsrfToken('');
-    });
-  }, []);
+  registerAuthFailureHandler(() => {
+    setUser(null);
+    setIsAuthenticated(false);
+  });
+}, []);
 
+  // Login handler
   const login = async (email, password, totpCode = '') => {
-    const response = await fetch(`${AUTH_BASE_URL}/login`, {
+    const response = await fetch('/api/auth/login', {
       method: 'POST',
-      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
-        ...(csrfToken ? { 'X-CSRF-Token': csrfToken } : {}),
+        'Accept': 'application/json',
+        ...(csrfToken ? { 'X-CSRF-Token': csrfToken } : {})
       },
-      body: JSON.stringify({
-        email,
-        password,
-        totp_code: totpCode,
-      }),
+      body: JSON.stringify({ email, password, totp_code: totpCode })
     });
 
-    let data = {};
-
-    try {
-      data = await response.json();
-    } catch {
-      data = {};
-    }
-
+    const data = await response.json();
     if (!response.ok) {
       throw new Error(data.detail || 'Login failed');
     }
@@ -99,53 +70,41 @@ export const AuthProvider = ({ children }) => {
     if (data.user) {
       setUser(data.user);
       setIsAuthenticated(true);
+      if (data.csrf_token) setCsrfToken(data.csrf_token);
     }
-
-    if (data.csrf_token) {
-      setCsrfToken(data.csrf_token);
-    }
-
     return data;
   };
 
+  // Signup handler
   const signup = async (signupData) => {
-    const response = await fetch(`${AUTH_BASE_URL}/signup`, {
+    const response = await fetch('/api/auth/signup', {
       method: 'POST',
-      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
+        'Accept': 'application/json'
       },
-      body: JSON.stringify(signupData),
+      body: JSON.stringify(signupData)
     });
 
-    let data = {};
-
-    try {
-      data = await response.json();
-    } catch {
-      data = {};
-    }
-
+    const data = await response.json();
     if (!response.ok) {
       throw new Error(data.detail || 'Signup failed');
     }
-
     return data;
   };
 
+  // Logout handler
   const logout = async () => {
     try {
-      await fetch(`${AUTH_BASE_URL}/logout`, {
+      await fetch('/api/auth/logout', {
         method: 'POST',
-        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          ...(csrfToken ? { 'X-CSRF-Token': csrfToken } : {}),
-        },
+          ...(csrfToken ? { 'X-CSRF-Token': csrfToken } : {})
+        }
       });
-    } catch (error) {
-      console.error('Logout error:', error);
+    } catch (e) {
+      console.error('Logout error:', e);
     } finally {
       setUser(null);
       setIsAuthenticated(false);
@@ -153,6 +112,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Trigger Re-Authentication password confirmation modal
   const triggerReAuth = (onSuccessCallback) => {
     setPendingReAuthCallback(() => onSuccessCallback);
     setReAuthRequired(true);
@@ -160,7 +120,6 @@ export const AuthProvider = ({ children }) => {
 
   const handleReAuthSuccess = () => {
     setReAuthRequired(false);
-
     if (pendingReAuthCallback) {
       pendingReAuthCallback();
       setPendingReAuthCallback(null);
@@ -184,22 +143,16 @@ export const AuthProvider = ({ children }) => {
     checkAuth,
     triggerReAuth,
     handleReAuthSuccess,
-    cancelReAuth,
+    cancelReAuth
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
-
   return context;
 };

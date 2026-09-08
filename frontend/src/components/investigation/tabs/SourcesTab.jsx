@@ -58,7 +58,7 @@ export default function SourcesTab({ investigationId, canManage }) {
 
   const handleAttachSource = async () => {
     if (!attachingSourceId.trim()) {
-      setError(t('Please enter a source ID'));
+      setError('Please enter a source ID');
       return;
     }
 
@@ -66,7 +66,7 @@ export default function SourcesTab({ investigationId, canManage }) {
     setError('');
     try {
       await attachSource(investigationId, attachingSourceId.trim());
-      setSuccess(t('Source attached successfully'));
+      setSuccess('Source attached successfully');
       setAttachingSourceId('');
       setShowAttachForm(false);
       loadSources();
@@ -86,7 +86,7 @@ export default function SourcesTab({ investigationId, canManage }) {
       setError('');
       try {
         await detachSource(investigationId, sourceId);
-        setSuccess(t('Source detached successfully'));
+        setSuccess('Source detached successfully');
         loadSources();
         setTimeout(() => setSuccess(''), 3000);
       } catch (err) {
@@ -102,7 +102,7 @@ export default function SourcesTab({ investigationId, canManage }) {
     setError('');
     try {
       const res = await triggerSourceForInvestigation(investigationId, sourceId);
-      setSuccess(t('Crawl run triggered for {{source}} [Status: {{status}}]', { source: sourceName || sourceId, status: res.status || 'QUEUED' }));
+      setSuccess(`Crawl run triggered for ${sourceName || sourceId} [Status: ${res.status || 'QUEUED'}]`);
       setTimeout(() => setSuccess(''), 3500);
     } catch (err) {
       setError(err.message);
@@ -143,7 +143,7 @@ export default function SourcesTab({ investigationId, canManage }) {
         </div>
       )}
       {success && (
-        <div className="p-3 bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 text-xs rounded flex items-center gap-2 font-mono">
+        <div className="p-3 bg-[#E9F7EF] dark:bg-[#2E8B57]/20 border border-[#A2E2BB] dark:border-[#2E8B57]/40 text-[#2E8B57] dark:text-[#34D399] text-xs rounded flex items-center gap-2 font-mono">
           <CheckCircle className="w-4 h-4 flex-shrink-0" />
           {success}
         </div>
@@ -152,7 +152,7 @@ export default function SourcesTab({ investigationId, canManage }) {
       {/* Attach Source Form */}
       {showAttachForm && canManage && (
         <div className="p-3 bg-card/60 border border-border/60 rounded space-y-2 font-mono">
-          <label className="text-[10px] uppercase text-muted-foreground">{t('Crawler Source')}</label>
+          <label className="text-[10px] uppercase text-muted-foreground">Crawler Source</label>
           <div className="flex gap-2">
             <select
               value={attachingSourceId}
@@ -161,7 +161,7 @@ export default function SourcesTab({ investigationId, canManage }) {
               disabled={loadingAvailableSources || actionLoading}
             >
               <option value="">
-                {loadingAvailableSources ? t('Loading crawler sources...') : t('Select a crawler source')}
+                {loadingAvailableSources ? 'Loading crawler sources...' : 'Select a crawler source'}
               </option>
               {availableSources
                 .filter((source) => !sources.some((attached) => attached.source_id === source.id))
@@ -172,12 +172,12 @@ export default function SourcesTab({ investigationId, canManage }) {
                 ))}
             </select>
             <Button size="sm" onClick={handleAttachSource} disabled={actionLoading} className="text-xs">
-              {t('Attach')}
+              Attach
             </Button>
           </div>
           {!loadingAvailableSources && availableSources.length === 0 && (
             <p className="text-[10px] text-muted-foreground">
-              {t('No crawler sources are available. Create one from Data Collection first.')}
+              No crawler sources are available. Create one from Data Collection first.
             </p>
           )}
         </div>
@@ -196,7 +196,7 @@ export default function SourcesTab({ investigationId, canManage }) {
               className="text-primary cursor-pointer ml-1 hover:underline"
               onClick={() => setShowAttachForm(true)}
             >
-              {t('Attach a source?')}
+              Attach a source?
             </span>
           )}
         </div>

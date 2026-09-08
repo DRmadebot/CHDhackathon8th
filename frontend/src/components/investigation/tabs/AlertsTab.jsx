@@ -13,9 +13,9 @@ const SEVERITY_COLORS = {
 };
 
 const STATUS_COLORS = {
-  OPEN: 'text-blue-400',
-  ACKNOWLEDGED: 'text-yellow-400',
-  RESOLVED: 'text-emerald-400',
+  OPEN: 'text-[#1E4D8C] dark:text-[#3D7DC9]',
+  ACKNOWLEDGED: 'text-[#C98A1B] dark:text-[#F59E0B]',
+  RESOLVED: 'text-[#2E8B57] dark:text-[#34D399]',
 };
 
 export default function AlertsTab({ investigationId, canManage }) {
@@ -55,7 +55,7 @@ export default function AlertsTab({ investigationId, canManage }) {
   };
 
   const handleCreate = () => {
-    if (!form.title.trim()) { setError(t('Alert title is required.')); return; }
+    if (!form.title.trim()) { setError('Alert title is required.'); return; }
     triggerReAuth(async () => {
       setActionLoading('create');
       setError('');
@@ -65,7 +65,7 @@ export default function AlertsTab({ investigationId, canManage }) {
           severity: form.severity,
           description: form.description.trim() || undefined,
         });
-        showSuccessMsg(t('Alert created.'));
+        showSuccessMsg('Alert created.');
         setForm({ title: '', severity: 'MEDIUM', description: '' });
         setShowCreate(false);
         loadAlerts();
@@ -83,7 +83,7 @@ export default function AlertsTab({ investigationId, canManage }) {
       setError('');
       try {
         await resolveAlert(investigationId, alertId);
-        showSuccessMsg(t('Alert resolved.'));
+        showSuccessMsg('Alert resolved.');
         loadAlerts();
       } catch (err) {
         setError(err.message);
@@ -131,7 +131,7 @@ export default function AlertsTab({ investigationId, canManage }) {
         <div className="p-4 bg-card/60 border border-border/60 rounded space-y-2 text-xs">
           <input
             type="text"
-            placeholder={t('Alert title (required)')}
+            placeholder="Alert title (required)"
             value={form.title}
             onChange={(e) => setForm({ ...form, title: e.target.value })}
             className="w-full bg-background border border-border/60 rounded px-2 py-1.5 text-xs"
@@ -146,15 +146,15 @@ export default function AlertsTab({ investigationId, canManage }) {
             ))}
           </select>
           <textarea
-            placeholder={t('Description (optional)')}
+            placeholder="Description (optional)"
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
             className="w-full bg-background border border-border/60 rounded px-2 py-1.5 text-xs h-16 resize-none"
           />
           <div className="flex gap-2 justify-end">
-            <Button size="sm" variant="ghost" onClick={() => setShowCreate(false)} className="text-xs h-7">{t('Cancel')}</Button>
+            <Button size="sm" variant="ghost" onClick={() => setShowCreate(false)} className="text-xs h-7">Cancel</Button>
             <Button size="sm" onClick={handleCreate} disabled={actionLoading === 'create'} className="text-xs h-7">
-              {t('Create Alert')}
+              Create Alert
             </Button>
           </div>
         </div>
@@ -167,7 +167,7 @@ export default function AlertsTab({ investigationId, canManage }) {
         </div>
       )}
       {success && (
-        <div className="p-3 bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 text-xs rounded flex items-center gap-2">
+        <div className="p-3 bg-[#E9F7EF] dark:bg-[#2E8B57]/20 border border-[#A2E2BB] dark:border-[#2E8B57]/40 text-[#2E8B57] dark:text-[#34D399] text-xs rounded flex items-center gap-2">
           <CheckCircle className="w-4 h-4 flex-shrink-0" /> {success}
         </div>
       )}
@@ -205,9 +205,9 @@ export default function AlertsTab({ investigationId, canManage }) {
                     variant="outline"
                     onClick={() => handleResolve(a.id)}
                     disabled={actionLoading === a.id}
-                    className="h-6 text-[10px] flex-shrink-0 border-emerald-700 text-emerald-400"
+                    className="h-6 text-[10px] flex-shrink-0 border-[#2E8B57] text-[#2E8B57] dark:text-[#34D399]"
                   >
-                    {actionLoading === a.id ? '...' : t('Resolve')}
+                    {actionLoading === a.id ? '...' : 'Resolve'}
                   </Button>
                 )}
               </div>

@@ -5,18 +5,18 @@ import { AlertCircle, RefreshCw, Clock } from 'lucide-react';
 import { Button } from '../../ui/button';
 
 const ACTION_COLORS = {
-  INVESTIGATION_CREATED: 'text-emerald-400',
-  INVESTIGATION_UPDATED: 'text-blue-400',
-  INVESTIGATION_CLOSED: 'text-red-400',
-  INVESTIGATION_ASSIGNED: 'text-yellow-400',
-  INVESTIGATION_ASSIGNMENT_REMOVED: 'text-orange-400',
-  EVIDENCE_PROMOTED: 'text-purple-400',
-  ALERT_CREATED: 'text-yellow-400',
-  ALERT_RESOLVED: 'text-emerald-400',
-  ALERT_DELETED: 'text-red-400',
-  INVESTIGATION_INTELLIGENCE_REVIEWED: 'text-cyan-400',
-  INVESTIGATION_INTELLIGENCE_REVIEWED_UPDATE: 'text-cyan-400',
-  DEFAULT: 'text-muted-foreground',
+  INVESTIGATION_CREATED: 'text-[#2E8B57] dark:text-[#34D399]',
+  INVESTIGATION_UPDATED: 'text-[#1E4D8C] dark:text-[#3D7DC9]',
+  INVESTIGATION_CLOSED: 'text-[#D64545] dark:text-[#F87171]',
+  INVESTIGATION_ASSIGNED: 'text-[#C98A1B] dark:text-[#F59E0B]',
+  INVESTIGATION_ASSIGNMENT_REMOVED: 'text-[#D96B27]',
+  EVIDENCE_PROMOTED: 'text-[#6B21A8]',
+  ALERT_CREATED: 'text-[#C98A1B] dark:text-[#F59E0B]',
+  ALERT_RESOLVED: 'text-[#2E8B57] dark:text-[#34D399]',
+  ALERT_DELETED: 'text-[#D64545] dark:text-[#F87171]',
+  INVESTIGATION_INTELLIGENCE_REVIEWED: 'text-[#0284C7]',
+  INVESTIGATION_INTELLIGENCE_REVIEWED_UPDATE: 'text-[#0284C7]',
+  DEFAULT: 'text-[#4A5568] dark:text-[#94A3B8]',
 };
 
 export default function ActivityTab({ investigationId }) {

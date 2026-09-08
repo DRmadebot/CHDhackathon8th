@@ -378,7 +378,7 @@ export default function NetworkGraph() {
               }}
               linkWidth={link => highlightLinks.has(link) ? 2 : (link.type === 'inferred' || link.type === 'live_cooccurrence' ? 1 : 1.5)}
               linkLineDash={link => link.type === 'inferred' ? [3, 2] : (link.type === 'live_cooccurrence' ? [1, 3] : null)}
-              backgroundColor={theme === 'dark' ? 'transparent' : '#f8fafc'}
+              backgroundColor="transparent"
               onNodeHover={setHoverNode}
               onNodeClick={node => {
                 if (selectedNode === node) {

@@ -85,7 +85,7 @@ export default function SuspectProfiles() {
                     <div>
                       <div className="flex items-center gap-3">
                         <h3 className="font-bold text-lg text-foreground tracking-wide">{suspect.label}</h3>
-                        <span className={`text-[10px] px-2 py-0.5 rounded font-mono ${suspect.crawler_candidate ? 'bg-cyan-500/15 text-cyan-400' : suspect.data_origin?.includes('crawler_enriched') ? 'bg-emerald-500/15 text-emerald-400' : 'bg-muted text-muted-foreground'}`}>
+                        <span className={`text-[10px] px-2 py-0.5 rounded font-mono ${suspect.crawler_candidate ? 'bg-cyan-500/15 text-cyan-400' : suspect.data_origin?.includes('crawler_enriched') ? 'bg-[#E9F7EF] dark:bg-[#2E8B57]/20 text-[#2E8B57] dark:text-[#34D399]' : 'bg-muted text-muted-foreground'}`}>
                           {suspect.crawler_candidate ? 'Crawler profile' : suspect.data_origin?.includes('crawler_enriched') ? 'Crawler enriched' : 'Base dataset'}
                         </span>
                         {suspect.telegram_handle && (
@@ -132,7 +132,7 @@ export default function SuspectProfiles() {
                             </div>
                           </div>
                           <div className="border-t border-border/20 pt-3 space-y-2">
-                            <span className="text-emerald-400 uppercase text-[10px] tracking-widest block">Crawler Enrichment</span>
+                            <span className="text-[#2E8B57] dark:text-[#34D399] uppercase text-[10px] tracking-widest block">Crawler Enrichment</span>
                             {detail ? (
                               detail.enrichment_source_count > 0 ? (
                                 <div className="space-y-2 text-[11px]">

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Users, CheckCircle, XCircle, ShieldAlert, UserCheck, RefreshCw, AlertTriangle } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth } from '../../context/AuthContext';
-import { useTranslation } from 'react-i18next';
 
 const ROLE_RANK = {
   "SUPER ADMIN / DGP": 0,
@@ -15,7 +14,6 @@ const ROLE_RANK = {
 
 export default function UserManagementTable() {
   const { user: currentUser } = useAuth();
-  const { t } = useTranslation();
   const [users, setUsers] = useState([]);
   const [statusFilter, setStatusFilter] = useState('PENDING');
   const [loading, setLoading] = useState(false);
@@ -103,10 +101,10 @@ export default function UserManagementTable() {
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-xl font-bold tracking-tight flex items-center gap-2 font-mono">
-            <Users className="w-5 h-5 text-primary" /> {t('Officer Account Governance')}
+            <Users className="w-5 h-5 text-primary" /> Officer Account Governance
           </h3>
           <p className="text-xs text-muted-foreground font-mono">
-            {t('Approve pending registrations, assign role permissions, or revoke user sessions.')}
+            Approve pending registrations, assign role permissions, or revoke user sessions.
           </p>
         </div>
 
@@ -136,7 +134,7 @@ export default function UserManagementTable() {
       )}
 
       {actionSuccess && (
-        <div className="p-3 bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 text-xs font-mono rounded-lg flex items-center gap-2">
+        <div className="p-3 bg-[#E9F7EF] dark:bg-[#2E8B57]/20 border border-[#A2E2BB] dark:border-[#2E8B57]/40 text-[#2E8B57] dark:text-[#34D399] text-xs font-mono rounded-lg flex items-center gap-2">
           <CheckCircle className="w-4 h-4 flex-shrink-0" />
           <span>{actionSuccess}</span>
         </div>
@@ -146,18 +144,18 @@ export default function UserManagementTable() {
         <table className="w-full text-left font-mono text-xs">
           <thead className="bg-muted/40 border-b border-border/60 text-muted-foreground uppercase">
             <tr>
-              <th className="p-3">{t('Officer Details')}</th>
-              <th className="p-3">{t('Badge & Unit')}</th>
-              <th className="p-3">{t('Status')}</th>
-              <th className="p-3">{t('Assign Role (Hierarchy Enforced)')}</th>
-              <th className="p-3 text-right">{t('Actions')}</th>
+              <th className="p-3">Officer Details</th>
+              <th className="p-3">Badge & Unit</th>
+              <th className="p-3">Status</th>
+              <th className="p-3">Assign Role (Hierarchy Enforced)</th>
+              <th className="p-3 text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border/40">
             {users.length === 0 ? (
               <tr>
                 <td colSpan="5" className="p-6 text-center text-muted-foreground">
-                  {t('No accounts found with status:')} {statusFilter}
+                  No accounts found with status: {statusFilter}
                 </td>
               </tr>
             ) : (
@@ -173,7 +171,7 @@ export default function UserManagementTable() {
                   </td>
                   <td className="p-3">
                     <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                      u.account_status === 'ACTIVE' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' :
+                      u.account_status === 'ACTIVE' ? 'bg-[#E9F7EF] dark:bg-[#2E8B57]/20 text-[#2E8B57] dark:text-[#34D399] border border-[#A2E2BB] dark:border-[#2E8B57]/40' :
                       u.account_status === 'PENDING' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40' :
                       'bg-destructive/20 text-destructive border border-destructive/40'
                     }`}>
@@ -205,9 +203,9 @@ export default function UserManagementTable() {
                         <Button
                           size="sm"
                           onClick={() => handleApproveReject(u.id, 'APPROVE')}
-                          className="bg-emerald-600 hover:bg-emerald-700 text-white h-7 text-xs px-2 gap-1 font-mono"
+                          className="bg-[#1E4D8C] hover:bg-[#163C6E] text-white h-7 text-xs px-2 gap-1 font-mono"
                         >
-                          <UserCheck className="w-3 h-3" /> {t('Approve')}
+                          <UserCheck className="w-3 h-3" /> Approve
                         </Button>
                         <Button
                           size="sm"
@@ -215,7 +213,7 @@ export default function UserManagementTable() {
                           onClick={() => handleApproveReject(u.id, 'REJECT')}
                           className="h-7 text-xs px-2 gap-1 font-mono"
                         >
-                          <XCircle className="w-3 h-3" /> {t('Reject')}
+                          <XCircle className="w-3 h-3" /> Reject
                         </Button>
                       </>
                     )}
@@ -228,7 +226,7 @@ export default function UserManagementTable() {
                         disabled={ROLE_RANK[u.role] <= myRank}
                         className="border-destructive/50 text-destructive hover:bg-destructive/10 h-7 text-xs px-2 gap-1 font-mono"
                       >
-                        <ShieldAlert className="w-3 h-3" /> {t('Suspend')}
+                        <ShieldAlert className="w-3 h-3" /> Suspend
                       </Button>
                     )}
                   </td>
