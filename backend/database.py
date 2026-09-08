@@ -43,6 +43,7 @@ def init_db():
     import operational_models  # Ensures operational presence tables are registered
 
     Base.metadata.create_all(bind=engine)
+    _migrate_recovery_columns()
     _migrate_suspect_enrichment_columns()
     _migrate_data_provenances_columns()
     _migrate_darknet_listing_columns()
@@ -119,6 +120,35 @@ def init_db():
     finally:
         db.close()
 
+def _migrate_recovery_columns():
+    """
+    Add content-recovery fields to raw_records for existing SQLite
+    databases without dropping or rewriting existing records.
+    """
+    inspector = inspect(engine)
+
+    if "raw_records" not in inspector.get_table_names():
+        return
+
+    existing = {
+        column["name"]
+        for column in inspector.get_columns("raw_records")
+    }
+
+    columns = {
+        "recovered_text": "TEXT",
+        "recovery_metadata": "JSON",
+    }
+
+    with engine.begin() as connection:
+        for name, definition in columns.items():
+            if name not in existing:
+                connection.execute(
+                    text(
+                        f"ALTER TABLE raw_records "
+                        f"ADD COLUMN {name} {definition}"
+                    )
+                )
 
 def _migrate_data_provenances_columns():
     """Add Step 3 evidence promotion columns to data_provenances without dropping existing table."""
