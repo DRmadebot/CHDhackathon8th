@@ -40,6 +40,7 @@ def init_db():
     import models  # Ensures existing application models are registered with Base
     import crawler.models  # Ensures crawler models are registered with Base
     import data.canonical_schema
+    import operational_models  # Ensures operational presence tables are registered
 
     Base.metadata.create_all(bind=engine)
     _migrate_suspect_enrichment_columns()

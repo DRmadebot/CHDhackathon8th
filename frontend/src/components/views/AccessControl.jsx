@@ -114,9 +114,9 @@ export default function AccessControl() {
       {showTFAModal && (
         <TFAModal
           onClose={() => setShowTFAModal(false)}
-          onComplete={() => {
+          onComplete={async () => {
+            await checkAuth();
             setShowTFAModal(false);
-            checkAuth();
           }}
         />
       )}

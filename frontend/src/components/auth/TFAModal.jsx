@@ -50,17 +50,35 @@ export default function TFAModal({ onClose, onComplete }) {
 
   const handleVerify = async (e) => {
     e.preventDefault();
+    const normalizedCode = verifyCode.trim();
+    if (!/^\d{6}$/.test(normalizedCode)) {
+      setError('Enter the 6-digit code currently shown in your authenticator app.');
+      return;
+    }
+
     setLoading(true);
     setError('');
     try {
       const res = await fetch('/api/auth/2fa/verify', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: verifyCode })
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ code: normalizedCode })
       });
-      const data = await res.json();
+      const responseText = await res.text();
+      let data = {};
+      if (responseText) {
+        try {
+          data = JSON.parse(responseText);
+        } catch {
+          throw new Error('The server returned an invalid 2FA response. Please try again.');
+        }
+      }
       if (!res.ok) throw new Error(data.detail || '2FA verification failed');
-      onComplete();
+      await onComplete();
     } catch (err) {
       setError(err.message);
     } finally {

@@ -51,6 +51,7 @@ from crawler.api.routers.sources import router as sources_router
 from crawler.api.routers.keywords import router as keywords_router
 from crawler.api.routers.raw_records import router as raw_records_router
 from crawler.api.routers.activity import router as activity_router
+from routers.operations_router import router as operations_router
 
 
 
@@ -129,6 +130,7 @@ app.include_router(sources_router)
 app.include_router(keywords_router)
 app.include_router(raw_records_router)
 app.include_router(activity_router)
+app.include_router(operations_router)
 
 
 
