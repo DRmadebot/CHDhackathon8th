@@ -6,7 +6,7 @@ import { Button } from '../../ui/button';
 import { AlertCircle, CheckCircle, RefreshCw, ShieldCheck, Filter } from 'lucide-react';
 
 const STATUS_COLORS = {
-  RELEVANT: 'text-emerald-400 bg-emerald-950/60 border-emerald-700',
+  RELEVANT: 'text-[#2E8B57] dark:text-[#34D399] bg-[#E9F7EF] dark:bg-[#2E8B57]/20 border-[#A2E2BB] dark:border-[#2E8B57]/40',
   DISMISSED: 'text-red-400 bg-red-950/60 border-red-700',
   PENDING_REVIEW: 'text-yellow-400 bg-yellow-950/60 border-yellow-700',
 };
@@ -100,7 +100,7 @@ export default function FindingsTab({ investigationId, canManage }) {
         </div>
       )}
       {success && (
-        <div className="p-3 bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 text-xs rounded flex items-center gap-2">
+        <div className="p-3 bg-[#E9F7EF] dark:bg-[#2E8B57]/20 border border-[#A2E2BB] dark:border-[#2E8B57]/40 text-[#2E8B57] dark:text-[#34D399] text-xs rounded flex items-center gap-2">
           <CheckCircle className="w-4 h-4 flex-shrink-0" /> {success}
         </div>
       )}
@@ -144,8 +144,8 @@ export default function FindingsTab({ investigationId, canManage }) {
                         disabled={alreadyPromoted || promoting === f.id}
                         className={`h-6 gap-1 text-[10px] ${
                           alreadyPromoted
-                            ? 'text-emerald-400 cursor-default'
-                            : 'border-emerald-700 text-emerald-400 hover:bg-emerald-950/40'
+                            ? 'text-[#2E8B57] dark:text-[#34D399] cursor-default'
+                            : 'border-[#2E8B57] text-[#2E8B57] dark:text-[#34D399] hover:bg-[#E9F7EF]'
                         }`}
                       >
                         <ShieldCheck className="w-3 h-3" />

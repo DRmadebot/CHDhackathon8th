@@ -44,21 +44,82 @@ class RawRecord(Base):
         nullable=False,
     )
 
+    # ------------------------------------------------------------------
+    # Original crawler artifact
+    # ------------------------------------------------------------------
+
+    # Exact raw content returned by the collector.
+    #
+    # IMPORTANT:
+    # This field must never be replaced by recovered/decoded content.
+    # The evidence hash is calculated from this original content.
     raw_text: Mapped[str | None] = mapped_column(
         Text,
         nullable=True,
     )
 
+    # ------------------------------------------------------------------
+    # Recovered / derived content
+    # ------------------------------------------------------------------
+
+    # Cleaned representation used by the normal crawler pipeline.
     cleaned_text: Mapped[str | None] = mapped_column(
         Text,
         nullable=True,
     )
 
+    # Content produced by the recovery layer when an encoding or
+    # obfuscation transformation was successfully recovered.
+    #
+    # Example:
+    #   raw_text      = "SGVsbG8gV29ybGQ="
+    #   recovered_text = "Hello World"
+    #
+    # This is DERIVED content and does not replace raw_text.
+    recovered_text: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True,
+    )
+
+    # Structured metadata describing how recovery was performed.
+    #
+    # Example:
+    # {
+    #     "status": "recovered",
+    #     "recovered": true,
+    #     "confidence": 0.94,
+    #     "transformations": [
+    #         {
+    #             "transformation": "base64",
+    #             "confidence": 0.94,
+    #             "reason": "Valid Base64 structure...",
+    #             "input_preview": "SGVsbG8...",
+    #             "output_preview": "Hello World"
+    #         }
+    #     ],
+    #     "candidates_considered": [...]
+    # }
+    recovery_metadata: Mapped[dict | None] = mapped_column(
+        JSON,
+        nullable=True,
+    )
+
+    # ------------------------------------------------------------------
+    # Evidence integrity
+    # ------------------------------------------------------------------
+
+    # SHA-256 of the ORIGINAL raw fetched content.
+    #
+    # This must continue to represent raw_text, not recovered_text.
     content_hash: Mapped[str] = mapped_column(
         String,
         nullable=False,
         index=True,
     )
+
+    # ------------------------------------------------------------------
+    # Existing analysis fields
+    # ------------------------------------------------------------------
 
     language: Mapped[str | None] = mapped_column(
         String,

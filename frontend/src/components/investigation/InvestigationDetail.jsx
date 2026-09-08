@@ -24,9 +24,9 @@ import ReportsTab from './tabs/ReportsTab';
 
 const PRIORITY_LABELS = { 1: 'Low', 2: 'Medium', 3: 'High', 4: 'Critical' };
 const STATUS_COLORS = {
-  OPEN: 'text-blue-400',
-  ACTIVE: 'text-yellow-400',
-  CLOSED: 'text-green-400'
+  OPEN: 'text-[#1E4D8C] dark:text-[#3D7DC9]',
+  ACTIVE: 'text-[#C98A1B] dark:text-[#F59E0B]',
+  CLOSED: 'text-[#2E8B57] dark:text-[#34D399]'
 };
 
 export default function InvestigationDetail({ investigationId, onBack }) {
@@ -205,7 +205,7 @@ export default function InvestigationDetail({ investigationId, onBack }) {
         </div>
       )}
       {success && (
-        <div className="p-3 bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 text-xs rounded flex items-center gap-2 font-mono">
+        <div className="p-3 bg-[#2E8B57]/10 border border-[#2E8B57]/40 text-[#2E8B57] dark:text-[#34D399] text-xs rounded flex items-center gap-2 font-mono">
           <CheckCircle className="w-4 h-4 flex-shrink-0" />
           {success}
         </div>

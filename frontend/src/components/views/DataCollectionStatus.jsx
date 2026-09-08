@@ -548,7 +548,7 @@ export default function DataCollectionStatus() {
       case 'DIRECT_SEED':
       default:
         return (
-          <Radio className="w-5 h-5 text-emerald-400" />
+          <Radio className="w-5 h-5 text-[#1E4D8C] dark:text-[#3D7DC9]" />
         );
     }
   };
@@ -620,7 +620,7 @@ export default function DataCollectionStatus() {
           onClick={() => setActiveTab('sources')}
           className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold uppercase transition-colors border-b-2 ${
             activeTab === 'sources'
-              ? 'border-emerald-500 text-emerald-400 bg-muted/40'
+              ? 'border-[#1E4D8C] dark:border-[#3D7DC9] text-[#1E4D8C] dark:text-[#3D7DC9] bg-muted/40'
               : 'border-transparent text-muted-foreground hover:text-foreground'
           }`}
         >
@@ -632,7 +632,7 @@ export default function DataCollectionStatus() {
           onClick={() => setActiveTab('keywords')}
           className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold uppercase transition-colors border-b-2 ${
             activeTab === 'keywords'
-              ? 'border-emerald-500 text-emerald-400 bg-muted/40'
+              ? 'border-[#1E4D8C] dark:border-[#3D7DC9] text-[#1E4D8C] dark:text-[#3D7DC9] bg-muted/40'
               : 'border-transparent text-muted-foreground hover:text-foreground'
           }`}
         >
@@ -645,7 +645,7 @@ export default function DataCollectionStatus() {
           onClick={() => setActiveTab('activity')}
           className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold uppercase transition-colors border-b-2 ${
             activeTab === 'activity'
-              ? 'border-emerald-500 text-emerald-400 bg-muted/40'
+              ? 'border-[#1E4D8C] dark:border-[#3D7DC9] text-[#1E4D8C] dark:text-[#3D7DC9] bg-muted/40'
               : 'border-transparent text-muted-foreground hover:text-foreground'
           }`}
         >
@@ -658,7 +658,7 @@ export default function DataCollectionStatus() {
           onClick={() => setActiveTab('raw_records')}
           className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold uppercase transition-colors border-b-2 ${
             activeTab === 'raw_records'
-              ? 'border-emerald-500 text-emerald-400 bg-muted/40'
+              ? 'border-[#1E4D8C] dark:border-[#3D7DC9] text-[#1E4D8C] dark:text-[#3D7DC9] bg-muted/40'
               : 'border-transparent text-muted-foreground hover:text-foreground'
           }`}
         >
@@ -674,7 +674,7 @@ export default function DataCollectionStatus() {
           {sources.map((src) => (
             <div
               key={src.id}
-              className="p-5 rounded-xl border bg-card hover:border-emerald-500/50 transition-all backdrop-blur"
+              className="p-5 rounded-xl border bg-card hover:border-primary/50 transition-all backdrop-blur"
             >
               <div className="flex justify-between items-start mb-3">
 
@@ -690,7 +690,7 @@ export default function DataCollectionStatus() {
 
                     <div className="flex flex-wrap items-center gap-2 mt-0.5">
 
-                      <span className="text-[10px] text-emerald-400 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-800/50 font-semibold uppercase">
+                      <span className="text-[10px] text-primary bg-primary/10 px-1.5 py-0.5 rounded border border-primary/30 font-semibold uppercase">
                         {src.source_type}
                       </span>
 
@@ -722,7 +722,7 @@ export default function DataCollectionStatus() {
                     }
                     className={`px-2.5 py-1 rounded text-xs font-bold uppercase transition-colors ${
                       src.is_active
-                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 hover:bg-emerald-500/30'
+                        ? 'bg-[#2E8B57]/20 text-[#2E8B57] dark:text-[#34D399] border border-[#2E8B57]/40 hover:bg-[#2E8B57]/30'
                         : 'bg-slate-800 text-slate-400 border border-slate-700 hover:bg-slate-700'
                     }`}
                   >
@@ -738,7 +738,7 @@ export default function DataCollectionStatus() {
                           openEditModal(src)
                         }
                         title="Edit Target (Requires Re-Auth)"
-                        className="p-1.5 rounded hover:bg-muted text-slate-400 hover:text-emerald-400 transition-colors"
+                        className="p-1.5 rounded hover:bg-muted text-slate-400 hover:text-primary transition-colors"
                       >
                         <Edit3 className="w-4 h-4" />
                       </button>
@@ -765,7 +765,7 @@ export default function DataCollectionStatus() {
                 src.config?.url && (
                   <div className="mb-4 p-2.5 rounded-lg bg-blue-950/30 border border-blue-900/50">
                     <span className="text-muted-foreground block text-[10px] uppercase mb-1">
-                      {t('Police API Endpoint:')}
+                      Police API Endpoint:
                     </span>
 
                     <span className="text-blue-300 text-xs break-all">
@@ -779,7 +779,7 @@ export default function DataCollectionStatus() {
 
                 <div>
                   <span className="text-muted-foreground block text-[10px] uppercase">
-                    {t('Poll Interval:')}
+                    Poll Interval:
                   </span>
 
                   <span className="text-foreground font-medium">
@@ -789,7 +789,7 @@ export default function DataCollectionStatus() {
 
                 <div>
                   <span className="text-muted-foreground block text-[10px] uppercase">
-                    {t('Crawl Delay Floor:')}
+                    Crawl Delay Floor:
                   </span>
 
                   <span className="text-foreground font-medium">
@@ -803,14 +803,14 @@ export default function DataCollectionStatus() {
 
                 <div>
                   <span className="text-muted-foreground text-[11px]">
-                    {t('Last Status:')}{' '}
+                    Last Status:{' '}
                   </span>
 
                   <span
                     className={`font-bold ${
                       src.last_run?.status ===
                       'COMPLETED'
-                        ? 'text-emerald-400'
+                        ? 'text-[#2E8B57] dark:text-[#34D399]'
                         : src.last_run?.status ===
                           'RUNNING'
                         ? 'text-blue-400 animate-pulse'
@@ -835,7 +835,7 @@ export default function DataCollectionStatus() {
                         src.last_run
                           .records_produced
                       }{' '}
-                      {t('records')})
+                      records)
                     </span>
                   )}
                 </div>
@@ -869,7 +869,7 @@ export default function DataCollectionStatus() {
                       disabled={
                         triggeringId === src.id
                       }
-                      className="gap-1.5 text-xs font-mono border-emerald-800/60 hover:border-emerald-500 text-emerald-400 bg-emerald-950/40 hover:bg-emerald-900/40"
+                      className="gap-1.5 text-xs font-mono border-primary/60 hover:border-primary text-primary bg-primary/10 hover:bg-primary/20"
                     >
                       <Play
                         className={`w-3 h-3 ${
@@ -907,7 +907,7 @@ export default function DataCollectionStatus() {
                   setShowAddKeywordModal(true)
                 }
                 size="sm"
-                className="gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs"
+                className="gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xs"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Add Global Term
@@ -919,7 +919,7 @@ export default function DataCollectionStatus() {
           <div className="p-5 rounded-xl border border-border bg-card">
 
             <h3 className="text-sm font-bold text-foreground uppercase mb-3 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-emerald-400" />
+              <Sparkles className="w-4 h-4 text-primary" />
               Active Merged Watchlist Terms (
               {keywordsData.active_terms.length})
             </h3>
@@ -929,9 +929,9 @@ export default function DataCollectionStatus() {
                 (term, idx) => (
                   <span
                     key={idx}
-                    className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-700/50 flex items-center gap-1.5"
+                    className="px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/30 flex items-center gap-1.5"
                   >
-                    <Tag className="w-3 h-3 text-emerald-500" />
+                    <Tag className="w-3 h-3 text-primary" />
                     {term}
                   </span>
                 )
@@ -943,7 +943,7 @@ export default function DataCollectionStatus() {
           <div className="p-5 rounded-xl border border-border bg-card">
 
             <h3 className="text-sm font-bold text-foreground uppercase mb-3 flex items-center gap-2">
-              <Database className="w-4 h-4 text-emerald-400" />
+              <Database className="w-4 h-4 text-primary" />
               Global Watchlist Seed Catalog
             </h3>
 
@@ -965,7 +965,7 @@ export default function DataCollectionStatus() {
                       </span>
                     </div>
 
-                    <span className="px-2 py-0.5 text-[10px] rounded uppercase font-bold bg-muted text-emerald-400 border border-border">
+                    <span className="px-2 py-0.5 text-[10px] rounded uppercase font-bold bg-muted text-primary border border-border">
                       {kw.language}
                     </span>
                   </div>
@@ -999,7 +999,7 @@ export default function DataCollectionStatus() {
                 <div className="flex justify-between items-start mb-2">
 
                   <div>
-                    <span className="font-bold text-sm text-emerald-400">
+                    <span className="font-bold text-sm text-primary">
                       {run.source_name}
                     </span>
 
@@ -1012,7 +1012,7 @@ export default function DataCollectionStatus() {
                     className={`px-2 py-0.5 rounded text-xs font-bold uppercase ${
                       run.status ===
                       'COMPLETED'
-                        ? 'bg-emerald-950 text-emerald-400 border border-emerald-700'
+                        ? 'bg-[#2E8B57]/10 text-[#2E8B57] dark:text-[#34D399] border border-[#2E8B57]/30'
                         : run.status ===
                           'RUNNING'
                         ? 'bg-blue-950 text-blue-400 border border-blue-700 animate-pulse'
@@ -1053,7 +1053,7 @@ export default function DataCollectionStatus() {
                       Produced
                     </span>
 
-                    <span className="font-bold text-emerald-400">
+                    <span className="font-bold text-primary">
                       {run.records_produced}
                     </span>
                   </div>
@@ -1063,7 +1063,7 @@ export default function DataCollectionStatus() {
                       Relevant
                     </span>
 
-                    <span className="font-bold text-emerald-400">
+                    <span className="font-bold text-primary">
                       {run.records_relevant}
                     </span>
                   </div>
@@ -1115,7 +1115,7 @@ export default function DataCollectionStatus() {
                 onChange={(e) => {
                   setRawRecordRelevance(e.target.value);
                 }}
-                className="bg-emerald-950/50 border border-emerald-500/50 text-emerald-300 rounded px-2 py-1 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-emerald-400"
+                className="bg-card border border-border text-foreground rounded px-2 py-1 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-primary"
               >
                 <option value="all">{t('All Records')}</option>
                 <option value="relevant">{t('Relevant')}</option>
@@ -1129,12 +1129,12 @@ export default function DataCollectionStatus() {
             {rawRecords.items.map((rec) => (
               <div
                 key={rec.id}
-                className="p-4 rounded-xl border border-border bg-card hover:border-emerald-800 transition-all"
+                className="p-4 rounded-xl border border-border bg-card hover:border-primary/50 transition-all"
               >
                 <div className="flex justify-between items-start mb-2">
 
                   <div className="max-w-xl">
-                    <span className="text-xs font-bold text-emerald-400 truncate block">
+                    <span className="text-xs font-bold text-primary truncate block">
                       {rec.url}
                     </span>
 
@@ -1145,7 +1145,7 @@ export default function DataCollectionStatus() {
                         {rec.language || 'en'}
                       </span>
 
-                      <span className="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800 px-1.5 py-0.5 rounded font-mono truncate max-w-[200px]">
+                      <span className="text-[10px] bg-primary/10 text-primary border border-primary/30 px-1.5 py-0.5 rounded font-mono truncate max-w-[200px]">
                         HASH: {rec.content_hash}
                       </span>
                     </div>
@@ -1153,7 +1153,7 @@ export default function DataCollectionStatus() {
 
                   <div className="flex items-center gap-2">
 
-                    <span className="text-xs px-2.5 py-1 rounded-full font-bold uppercase bg-emerald-950 text-emerald-300 border border-emerald-700">
+                    <span className="text-xs px-2.5 py-1 rounded-full font-bold uppercase bg-primary/10 text-primary border border-primary/30">
                       {rec.relevance_label} (
                       {Math.round(
                         (rec.relevance_confidence ||
@@ -1176,7 +1176,7 @@ export default function DataCollectionStatus() {
                   </div>
                 </div>
 
-                <p className="text-xs text-slate-300 line-clamp-2 bg-background p-2.5 rounded border border-border font-sans">
+                <p className="text-xs text-black dark:text-slate-300 line-clamp-2 bg-background p-2.5 rounded border border-border font-sans">
                   {rec.cleaned_text}
                 </p>
               </div>
@@ -1189,7 +1189,7 @@ export default function DataCollectionStatus() {
       {selectedRecord && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
 
-          <div className="bg-slate-900 border border-emerald-500/50 rounded-xl max-w-3xl w-full max-h-[85vh] overflow-y-auto p-6 font-mono shadow-2xl relative animate-in fade-in zoom-in-95">
+          <div className="bg-card border border-primary/40 rounded-xl max-w-3xl w-full max-h-[85vh] overflow-y-auto p-6 font-mono shadow-2xl relative animate-in fade-in zoom-in-95">
 
             <button
               onClick={() =>
@@ -1200,25 +1200,25 @@ export default function DataCollectionStatus() {
               <X className="w-5 h-5" />
             </button>
 
-            <h3 className="text-lg font-bold uppercase text-emerald-400 mb-1 flex items-center gap-2">
-              <ShieldCheck className="w-5 h-5 text-emerald-400" />
+            <h3 className="text-lg font-bold uppercase text-primary mb-1 flex items-center gap-2">
+              <ShieldCheck className="w-5 h-5 text-primary" />
               Raw Record Evidence Detail
             </h3>
 
-            <p className="text-xs text-slate-400 mb-4">
+            <p className="text-xs text-muted-foreground mb-4">
               {selectedRecord.url}
             </p>
 
             <div className="space-y-4 text-xs">
 
-              <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 grid grid-cols-2 gap-2">
+              <div className="p-3 bg-muted/40 rounded-lg border border-border grid grid-cols-2 gap-2">
 
                 <div>
-                  <span className="text-slate-500 text-[10px] uppercase block">
+                  <span className="text-muted-foreground text-[10px] uppercase block">
                     Content Hash (SHA-256):
                   </span>
 
-                  <span className="text-emerald-400 font-mono break-all">
+                  <span className="text-primary font-mono break-all">
                     {selectedRecord.content_hash}
                   </span>
                 </div>
@@ -1261,18 +1261,18 @@ export default function DataCollectionStatus() {
                             ) => (
                               <div
                                 key={`${entity.type}-${entity.value}-${index}`}
-                                className="rounded-md border border-slate-800 bg-slate-950 p-2"
+                                className="rounded-md border border-border bg-muted/20 p-2"
                               >
-                                <div className="text-xs font-medium text-emerald-300 break-all">
+                                <div className="text-xs font-medium text-primary break-all">
                                   {entity.value}
                                 </div>
 
-                                <div className="text-[11px] text-slate-500 mt-1">
+                                <div className="text-[11px] text-muted-foreground mt-1">
                                   {entity.type} ·{' '}
                                   {entity.role}
                                 </div>
 
-                                <div className="text-[11px] text-slate-500">
+                                <div className="text-[11px] text-muted-foreground">
                                   Confidence:{' '}
                                   {(
                                     entity.confidence *
@@ -1285,14 +1285,14 @@ export default function DataCollectionStatus() {
                           )}
                         </div>
                       ) : (
-                        <div className="text-xs text-slate-500">
+                        <div className="text-xs text-muted-foreground">
                           No entities identified.
                         </div>
                       )}
                     </div>
 
                     <div>
-                      <div className="text-xs font-semibold text-slate-400 uppercase mb-2">
+                      <div className="text-xs font-semibold text-muted-foreground uppercase mb-2">
                         Relationships
                       </div>
 
@@ -1309,13 +1309,13 @@ export default function DataCollectionStatus() {
                             ) => (
                               <div
                                 key={`${relationship.subject}-${relationship.relation}-${relationship.object}-${index}`}
-                                className="rounded-md border border-slate-800 bg-slate-950 p-2"
+                                className="rounded-md border border-border bg-muted/20 p-2"
                               >
-                                <div className="text-xs text-slate-200 break-words">
+                                <div className="text-xs text-foreground break-words">
                                   {
                                     relationship.subject
                                   }{' '}
-                                  <span className="font-semibold text-emerald-400">
+                                  <span className="font-semibold text-primary">
                                     {
                                       relationship.relation
                                     }
@@ -1325,7 +1325,7 @@ export default function DataCollectionStatus() {
                                   }
                                 </div>
 
-                                <div className="text-[11px] text-slate-500 mt-1">
+                                <div className="text-[11px] text-muted-foreground mt-1">
                                   Confidence:{' '}
                                   {(
                                     relationship.confidence *
@@ -1338,7 +1338,7 @@ export default function DataCollectionStatus() {
                           )}
                         </div>
                       ) : (
-                        <div className="text-xs text-slate-500">
+                        <div className="text-xs text-muted-foreground">
                           No relationships identified.
                         </div>
                       )}
@@ -1348,7 +1348,7 @@ export default function DataCollectionStatus() {
               )}
 
               <div>
-                <h4 className="font-bold text-slate-300 uppercase mb-1">
+                <h4 className="font-bold text-foreground uppercase mb-1">
                   Extracted Candidate Entities
                 </h4>
 
@@ -1357,14 +1357,14 @@ export default function DataCollectionStatus() {
                     (cand, i) => (
                       <span
                         key={i}
-                        className="px-2.5 py-1 rounded bg-slate-800 border border-slate-700 text-xs font-semibold text-emerald-300 flex items-center gap-1"
+                        className="px-2.5 py-1 rounded bg-muted border border-border text-xs font-semibold text-primary flex items-center gap-1"
                       >
-                        <Hash className="w-3 h-3 text-emerald-500" />
+                        <Hash className="w-3 h-3 text-primary" />
                         [{cand.type}] {cand.value}
                       </span>
                     )
                   ) || (
-                    <span className="text-slate-500">
+                    <span className="text-muted-foreground">
                       None extracted
                     </span>
                   )}
@@ -1372,11 +1372,11 @@ export default function DataCollectionStatus() {
               </div>
 
               <div>
-                <h4 className="font-bold text-slate-300 uppercase mb-1">
+                <h4 className="font-bold text-foreground uppercase mb-1">
                   Cleaned Body Text
                 </h4>
 
-                <div className="bg-slate-950 p-4 rounded-lg border border-slate-800 max-h-60 overflow-y-auto font-sans text-slate-200 whitespace-pre-wrap leading-relaxed">
+                <div className="bg-muted/30 p-4 rounded-lg border border-border max-h-60 overflow-y-auto font-sans text-foreground whitespace-pre-wrap leading-relaxed">
                   {selectedRecord.cleaned_text}
                 </div>
               </div>
@@ -1389,18 +1389,18 @@ export default function DataCollectionStatus() {
       {showAddSourceModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
 
-          <div className="bg-slate-900 border border-emerald-500/50 rounded-xl max-w-lg w-full p-6 font-mono shadow-2xl relative">
+          <div className="bg-card border border-primary/40 rounded-xl max-w-lg w-full p-6 font-mono shadow-2xl relative">
 
             <button
               onClick={() =>
                 setShowAddSourceModal(false)
               }
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-100"
+              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <h3 className="text-lg font-bold uppercase text-emerald-400 mb-4">
+            <h3 className="text-lg font-bold uppercase text-primary mb-4">
               Add New Crawler Target
             </h3>
 
@@ -1426,13 +1426,13 @@ export default function DataCollectionStatus() {
                       name: e.target.value,
                     })
                   }
-                  className="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
                 />
               </div>
 
               {/* Source Type */}
               <div>
-                <label className="block text-slate-300 mb-1">
+                <label className="block text-foreground mb-1">
                   Source Type
                 </label>
 
@@ -1444,7 +1444,7 @@ export default function DataCollectionStatus() {
                       source_type: e.target.value,
                     })
                   }
-                  className="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
                 >
                   <option value="DIRECT_SEED">
                     DIRECT_SEED (Public Web)
@@ -1476,7 +1476,7 @@ export default function DataCollectionStatus() {
               {newSource.source_type ===
               'POLICE_API' ? (
                 <div>
-                  <label className="block text-slate-300 mb-1">
+                  <label className="block text-foreground mb-1">
                     Police API URL
                   </label>
 
@@ -1491,16 +1491,16 @@ export default function DataCollectionStatus() {
                         api_url: e.target.value,
                       })
                     }
-                    className="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 font-mono text-xs"
+                    className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary font-mono text-xs"
                   />
 
-                  <p className="text-[10px] text-slate-500 mt-1">
+                  <p className="text-[10px] text-muted-foreground mt-1">
                     API must return a JSON list. Only GET requests are supported.
                   </p>
                 </div>
               ) : (
                 <div>
-                  <label className="block text-slate-300 mb-1">
+                  <label className="block text-foreground mb-1">
                     Seed URLs / Channels (one per line)
                   </label>
 
@@ -1514,7 +1514,7 @@ export default function DataCollectionStatus() {
                         seed_urls: e.target.value,
                       })
                     }
-                    className="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 font-mono text-xs"
+                    className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary font-mono text-xs"
                   />
                 </div>
               )}
@@ -1523,7 +1523,7 @@ export default function DataCollectionStatus() {
               <div className="grid grid-cols-2 gap-3">
 
                 <div>
-                  <label className="block text-slate-300 mb-1">
+                  <label className="block text-foreground mb-1">
                     Poll Interval (seconds)
                   </label>
 
@@ -1540,12 +1540,12 @@ export default function DataCollectionStatus() {
                           e.target.value,
                       })
                     }
-                    className="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-slate-300 mb-1">
+                  <label className="block text-foreground mb-1">
                     Crawl Delay (s)
                   </label>
 
@@ -1563,7 +1563,7 @@ export default function DataCollectionStatus() {
                           e.target.value,
                       })
                     }
-                    className="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
                   />
                 </div>
               </div>
@@ -1577,14 +1577,14 @@ export default function DataCollectionStatus() {
                   onClick={() =>
                     setShowAddSourceModal(false)
                   }
-                  className="text-xs font-mono"
+                  className="text-xs font-mono font-bold text-foreground border-border hover:bg-muted"
                 >
                   Cancel
                 </Button>
 
                 <Button
                   type="submit"
-                  className="bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs font-mono"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xs font-mono"
                 >
                   Create Target
                 </Button>
@@ -1599,19 +1599,19 @@ export default function DataCollectionStatus() {
         editingSource && (
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
 
-            <div className="bg-slate-900 border border-emerald-500/50 rounded-xl max-w-lg w-full p-6 font-mono shadow-2xl relative">
+            <div className="bg-card border border-primary/40 rounded-xl max-w-lg w-full p-6 font-mono shadow-2xl relative">
 
               <button
                 onClick={() => {
                   setShowEditSourceModal(false);
                   setEditingSource(null);
                 }}
-                className="absolute top-4 right-4 text-slate-400 hover:text-slate-100"
+                className="absolute top-4 right-4 text-muted-foreground hover:text-foreground"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <h3 className="text-lg font-bold uppercase text-emerald-400 mb-1">
+              <h3 className="text-lg font-bold uppercase text-primary mb-1">
                 Edit Crawler Target
               </h3>
 
@@ -1627,7 +1627,7 @@ export default function DataCollectionStatus() {
 
                 {/* Source Name */}
                 <div>
-                  <label className="block text-slate-300 mb-1">
+                  <label className="block text-foreground mb-1">
                     Source Name
                   </label>
 
@@ -1641,7 +1641,7 @@ export default function DataCollectionStatus() {
                         name: e.target.value,
                       })
                     }
-                    className="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
                   />
                 </div>
 
@@ -1649,7 +1649,7 @@ export default function DataCollectionStatus() {
                 {editingSource.source_type ===
                 'POLICE_API' ? (
                   <div>
-                    <label className="block text-slate-300 mb-1">
+                    <label className="block text-foreground mb-1">
                       Police API URL
                     </label>
 
@@ -1665,16 +1665,16 @@ export default function DataCollectionStatus() {
                           api_url: e.target.value,
                         })
                       }
-                      className="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 font-mono text-xs"
+                      className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary font-mono text-xs"
                     />
 
-                    <p className="text-[10px] text-slate-500 mt-1">
+                    <p className="text-[10px] text-muted-foreground mt-1">
                       API must return a JSON list. Only GET requests are supported.
                     </p>
                   </div>
                 ) : (
                   <div>
-                    <label className="block text-slate-300 mb-1">
+                    <label className="block text-foreground mb-1">
                       Seed URLs / Channels (one per line)
                     </label>
 
@@ -1688,7 +1688,7 @@ export default function DataCollectionStatus() {
                             e.target.value,
                         })
                       }
-                      className="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 font-mono text-xs"
+                      className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary font-mono text-xs"
                     />
                   </div>
                 )}
@@ -1697,7 +1697,7 @@ export default function DataCollectionStatus() {
                 <div className="grid grid-cols-2 gap-3">
 
                   <div>
-                    <label className="block text-slate-300 mb-1">
+                    <label className="block text-foreground mb-1">
                       Poll Interval (seconds)
                     </label>
 
@@ -1714,12 +1714,12 @@ export default function DataCollectionStatus() {
                             e.target.value,
                         })
                       }
-                      className="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-emerald-500"
+                      className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-300 mb-1">
+                    <label className="block text-foreground mb-1">
                       Crawl Delay (s)
                     </label>
 
@@ -1737,7 +1737,7 @@ export default function DataCollectionStatus() {
                             e.target.value,
                         })
                       }
-                      className="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-emerald-500"
+                      className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
                     />
                   </div>
                 </div>
@@ -1758,12 +1758,12 @@ export default function DataCollectionStatus() {
                           e.target.checked,
                       })
                     }
-                    className="rounded border-slate-800 bg-slate-950 text-emerald-500 focus:ring-0"
+                    className="rounded border-border bg-background text-primary focus:ring-0"
                   />
 
                   <label
                     htmlFor="editIsActive"
-                    className="text-slate-300 text-xs select-none"
+                    className="text-foreground text-xs select-none"
                   >
                     Enable Source (Active)
                   </label>
@@ -1779,14 +1779,14 @@ export default function DataCollectionStatus() {
                       setShowEditSourceModal(false);
                       setEditingSource(null);
                     }}
-                    className="text-xs font-mono"
+                    className="text-xs font-mono font-bold text-foreground border-border hover:bg-muted"
                   >
                     Cancel
                   </Button>
 
                   <Button
                     type="submit"
-                    className="bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs font-mono"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xs font-mono"
                   >
                     Authorize & Save
                   </Button>
@@ -1800,18 +1800,18 @@ export default function DataCollectionStatus() {
       {showAddKeywordModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
 
-          <div className="bg-slate-900 border border-emerald-500/50 rounded-xl max-w-md w-full p-6 font-mono shadow-2xl relative">
+          <div className="bg-card border border-primary/40 rounded-xl max-w-md w-full p-6 font-mono shadow-2xl relative">
 
             <button
               onClick={() =>
                 setShowAddKeywordModal(false)
               }
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-100"
+              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <h3 className="text-lg font-bold uppercase text-emerald-400 mb-4">
+            <h3 className="text-lg font-bold uppercase text-primary mb-4">
               Add Global Watchlist Term
             </h3>
 
@@ -1821,7 +1821,7 @@ export default function DataCollectionStatus() {
             >
 
               <div>
-                <label className="block text-slate-300 mb-1">
+                <label className="block text-foreground mb-1">
                   Term
                 </label>
 
@@ -1836,14 +1836,14 @@ export default function DataCollectionStatus() {
                       term: e.target.value,
                     })
                   }
-                  className="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
 
                 <div>
-                  <label className="block text-slate-300 mb-1">
+                  <label className="block text-foreground mb-1">
                     Language
                   </label>
 
@@ -1856,7 +1856,7 @@ export default function DataCollectionStatus() {
                           e.target.value,
                       })
                     }
-                    className="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
                   >
                     <option value="en">
                       English (en)
@@ -1873,7 +1873,7 @@ export default function DataCollectionStatus() {
                 </div>
 
                 <div>
-                  <label className="block text-slate-300 mb-1">
+                  <label className="block text-foreground mb-1">
                     Category
                   </label>
 
@@ -1886,7 +1886,7 @@ export default function DataCollectionStatus() {
                           e.target.value,
                       })
                     }
-                    className="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-background border border-border rounded px-3 py-2 text-foreground focus:outline-none focus:border-primary"
                   >
                     <option value="substance">
                       Substance
@@ -1911,14 +1911,14 @@ export default function DataCollectionStatus() {
                   onClick={() =>
                     setShowAddKeywordModal(false)
                   }
-                  className="text-xs font-mono"
+                  className="text-xs font-mono font-bold text-foreground border-border hover:bg-muted"
                 >
                   Cancel
                 </Button>
 
                 <Button
                   type="submit"
-                  className="bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs font-mono"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xs font-mono"
                 >
                   Add Term
                 </Button>

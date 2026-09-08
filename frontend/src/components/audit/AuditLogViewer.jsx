@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { KeyRound, Download, RefreshCw, Filter, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth } from '../../context/AuthContext';
-import { useTranslation } from 'react-i18next';
 
 export default function AuditLogViewer() {
   const { triggerReAuth } = useAuth();
-  const { t } = useTranslation();
   const [logs, setLogs] = useState([]);
   const [actionFilter, setActionFilter] = useState('');
   const [resultFilter, setResultFilter] = useState('');
@@ -65,19 +63,19 @@ export default function AuditLogViewer() {
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-xl font-bold text-foreground flex items-center gap-2">
-            <KeyRound className="w-5 h-5 text-amber-400" /> {t('Immutable Audit Log Trail')}
+            <KeyRound className="w-5 h-5 text-amber-400" /> Immutable Audit Log Trail
           </h3>
           <p className="text-xs text-muted-foreground">
-            {t('Append-only security and activity record (UPDATE & DELETE strictly disabled).')}
+            Append-only security and activity record (UPDATE & DELETE strictly disabled).
           </p>
         </div>
 
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={fetchLogs} disabled={loading} className="text-xs gap-1">
-            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} /> {t('Load Audit Trail')}
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} /> Load Audit Trail
           </Button>
           <Button size="sm" onClick={handleExport} className="text-xs gap-1 bg-amber-600 hover:bg-amber-700 text-white">
-            <Download className="w-3.5 h-3.5" /> {t('Export CSV')}
+            <Download className="w-3.5 h-3.5" /> Export CSV
           </Button>
         </div>
       </div>
@@ -91,7 +89,7 @@ export default function AuditLogViewer() {
 
       <div className="flex gap-3 bg-card p-3 rounded-lg border border-border/60">
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <Filter className="w-4 h-4 text-primary" /> {t('Filter:')}
+          <Filter className="w-4 h-4 text-primary" /> Filter:
         </div>
         <input
           type="text"
@@ -105,13 +103,13 @@ export default function AuditLogViewer() {
           onChange={(e) => setResultFilter(e.target.value)}
           className="bg-background border border-border/60 rounded px-3 py-1 text-xs focus:border-primary"
         >
-          <option value="">{t('All Results')}</option>
+          <option value="">All Results</option>
           <option value="SUCCESS">SUCCESS</option>
           <option value="FAILURE">FAILURE</option>
           <option value="DENIED">DENIED</option>
         </select>
         <Button size="sm" onClick={fetchLogs} className="text-xs">
-          {t('Apply Filter')}
+          Apply Filter
         </Button>
       </div>
 
@@ -119,12 +117,12 @@ export default function AuditLogViewer() {
         <table className="w-full text-left text-xs">
           <thead className="bg-muted/40 border-b border-border/60 text-muted-foreground uppercase text-[11px]">
             <tr>
-              <th className="p-3">{t('Timestamp (UTC)')}</th>
-              <th className="p-3">{t('Officer ID & Role')}</th>
-              <th className="p-3">{t('Security Action')}</th>
-              <th className="p-3">{t('Resource Target')}</th>
-              <th className="p-3">{t('Result')}</th>
-              <th className="p-3">{t('IP Address')}</th>
+              <th className="p-3">Timestamp (UTC)</th>
+              <th className="p-3">Officer ID & Role</th>
+              <th className="p-3">Security Action</th>
+              <th className="p-3">Resource Target</th>
+              <th className="p-3">Result</th>
+              <th className="p-3">IP Address</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border/40 font-mono text-[11px]">
@@ -150,7 +148,7 @@ export default function AuditLogViewer() {
                   </td>
                   <td className="p-3">
                     <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                      l.result === 'SUCCESS' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' :
+                      l.result === 'SUCCESS' ? 'bg-[#E9F7EF] dark:bg-[#2E8B57]/20 text-[#2E8B57] dark:text-[#34D399] border border-[#A2E2BB] dark:border-[#2E8B57]/40' :
                       l.result === 'DENIED' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40' :
                       'bg-destructive/20 text-destructive border border-destructive/40'
                     }`}>

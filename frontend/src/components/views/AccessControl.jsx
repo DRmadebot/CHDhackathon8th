@@ -31,24 +31,24 @@ export default function AccessControl() {
           <div className="w-16 h-16 bg-primary/20 text-primary rounded-full flex items-center justify-center mb-3 border border-primary/40">
             <Shield className="w-8 h-8" />
           </div>
-          <h3 className="text-lg font-bold text-foreground">{user?.full_name || t('Investigator Session')}</h3>
+          <h3 className="text-lg font-bold text-foreground">{user?.full_name || 'Investigator Session'}</h3>
           <p className="text-xs text-muted-foreground mb-1">{user?.email}</p>
           <div className="mt-2 inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/30 rounded-full text-xs font-bold text-primary">
-            {t('Role:')} {user?.role || 'CONSTABLE'}
+            Role: {user?.role || 'CONSTABLE'}
           </div>
           
           <div className="w-full border-t border-border/40 my-4 pt-4 text-xs text-left space-y-2 text-muted-foreground">
-            <div>{t('Badge Number')}: <span className="text-foreground font-semibold">{user?.badge_number || 'N/A'}</span></div>
-            <div>{t('Assigned Unit')}: <span className="text-foreground font-semibold">{user?.unit || t('Cyber Intelligence')}</span></div>
-            <div>{t('2FA Protection:')} <span className={user?.mfa_enabled ? 'text-emerald-400 font-bold' : 'text-amber-400 font-bold'}>
-              {user?.mfa_enabled ? t('ENABLED (TOTP)') : t('DISABLED')}
+            <div>Badge Number: <span className="text-foreground font-semibold">{user?.badge_number || 'N/A'}</span></div>
+            <div>Assigned Unit: <span className="text-foreground font-semibold">{user?.unit || 'Cyber Intelligence'}</span></div>
+            <div>2FA Protection: <span className={user?.mfa_enabled ? 'text-[#2E8B57] dark:text-[#34D399] font-bold' : 'text-[#C98A1B] dark:text-[#F59E0B] font-bold'}>
+              {user?.mfa_enabled ? 'ENABLED (TOTP)' : 'DISABLED'}
             </span></div>
           </div>
 
           <div className="w-full flex gap-2 mt-auto">
             {!user?.mfa_enabled && (
               <Button onClick={() => setShowTFAModal(true)} variant="outline" size="sm" className="flex-1 gap-1 text-xs font-mono">
-                <KeyRound className="w-4 h-4 text-amber-400" /> {t('Enable 2FA')}
+                <KeyRound className="w-4 h-4 text-amber-400" /> Enable 2FA
               </Button>
             )}
             <Button onClick={logout} variant="destructive" size="sm" className="flex-1 gap-1 text-xs font-mono">
@@ -74,7 +74,7 @@ export default function AccessControl() {
               </div>
             </div>
             <Button variant="outline" size="sm" className="font-mono text-xs">
-              {showAdminTable ? t('Hide Table') : t('Manage')}
+              {showAdminTable ? 'Hide Table' : 'Manage'}
             </Button>
           </div>
 
@@ -93,7 +93,7 @@ export default function AccessControl() {
               </div>
             </div>
             <Button variant="outline" size="sm" className="font-mono text-xs">
-              {showAuditLogs ? t('Hide Logs') : t('View Audit Logs')}
+              {showAuditLogs ? 'Hide Logs' : 'View Audit Logs'}
             </Button>
           </div>
         </div>
@@ -114,9 +114,9 @@ export default function AccessControl() {
       {showTFAModal && (
         <TFAModal
           onClose={() => setShowTFAModal(false)}
-          onComplete={() => {
+          onComplete={async () => {
+            await checkAuth();
             setShowTFAModal(false);
-            checkAuth();
           }}
         />
       )}

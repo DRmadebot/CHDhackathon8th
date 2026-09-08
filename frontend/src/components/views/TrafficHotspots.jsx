@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../theme-provider';
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, GeoJSON, Rectangle, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import indiaOsmData from '../../assets/india-osm.json';
 import { apiFetch } from '../../lib/apiClient';
 import { Button } from '../ui/button';
-import { Maximize, Minimize } from 'lucide-react';
+import { Maximize, Minimize, Crosshair, Shield } from 'lucide-react';
 
 const TIER_COLORS = {
   critical: '#ef4444',
@@ -67,6 +67,24 @@ const createLiveIcon = (radius) => {
 
 const LIVE_POLL_INTERVAL_MS = 60000; // matches backend crawler_to_dataset_updater cadence
 
+const createPersonnelIcon = (freshness) => {
+  const color = freshness === 'fresh' ? '#2563eb' : freshness === 'aging' ? '#eab308' : '#64748b';
+  return L.divIcon({
+    className: 'personnel-map-marker',
+    html: `<div style="width:22px;height:22px;border-radius:50%;background:${color};border:2px solid white;box-shadow:0 0 0 3px ${color}55,0 0 12px ${color};display:flex;align-items:center;justify-content:center;color:white;font-size:12px">&#9679;</div>`,
+    iconSize: [22, 22],
+    iconAnchor: [11, 11],
+  });
+};
+
+function ChandigarhFocus({ focus }) {
+  const map = useMap();
+  useEffect(() => {
+    if (focus) map.setView([30.7333, 76.7794], 12, { animate: true });
+  }, [focus, map]);
+  return null;
+}
+
 export default function TrafficHotspots() {
   const { t } = useTranslation();
   const { theme } = useTheme();
@@ -78,6 +96,12 @@ export default function TrafficHotspots() {
   const [showLive, setShowLive] = useState(true);
   const [liveUpdatedAt, setLiveUpdatedAt] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [operationalZones, setOperationalZones] = useState([]);
+  const [personnel, setPersonnel] = useState([]);
+  const [operationsError, setOperationsError] = useState(null);
+  const [focusChandigarh, setFocusChandigarh] = useState(false);
+  const [showOperations, setShowOperations] = useState(true);
+  const [alertMessage, setAlertMessage] = useState('');
   const mapRef = useRef(null);
 
   // Leaflet sizes its canvas from the container's dimensions at mount time,
@@ -157,6 +181,31 @@ export default function TrafficHotspots() {
     };
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+    const loadOperations = async () => {
+      try {
+        const [zonesResponse, presenceResponse] = await Promise.all([
+          apiFetch('/api/operations/zones'),
+          apiFetch('/api/operations/presence'),
+        ]);
+        if (!zonesResponse.ok || !presenceResponse.ok) throw new Error('Operational map data unavailable');
+        const zonesData = await zonesResponse.json();
+        const presenceData = await presenceResponse.json();
+        if (!cancelled) {
+          setOperationalZones(Array.isArray(zonesData.zones) ? zonesData.zones : []);
+          setPersonnel(Array.isArray(presenceData.items) ? presenceData.items : []);
+          setOperationsError(null);
+        }
+      } catch (error) {
+        if (!cancelled) setOperationsError(error.message);
+      }
+    };
+    loadOperations();
+    const interval = setInterval(loadOperations, 15000);
+    return () => { cancelled = true; clearInterval(interval); };
+  }, []);
+
   const cartoKey = import.meta.env.VITE_CARTO_API_KEY;
   const tileUrl = cartoKey
     ? (theme === 'dark'
@@ -231,6 +280,15 @@ export default function TrafficHotspots() {
               )}
             </p>
           </div>
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <Button size="sm" variant={showOperations ? 'default' : 'secondary'} className="text-xs font-mono uppercase tracking-wider" onClick={() => setShowOperations((value) => !value)}>
+              <Shield className="w-3 h-3 mr-1" /> {t('Operational Layer')}
+            </Button>
+            <Button size="sm" variant="secondary" className="text-xs font-mono uppercase tracking-wider" onClick={() => setFocusChandigarh((value) => !value)} title={t('Focus Chandigarh')}>
+              <Crosshair className="w-3 h-3 mr-1" /> {t('Focus Chandigarh')}
+            </Button>
+            {operationsError && <span className="text-[10px] text-amber-500">{operationsError}</span>}
+          </div>
         </div>
         {geoActivity && !loadError && (
           <div className="text-right font-mono">
@@ -258,6 +316,7 @@ export default function TrafficHotspots() {
             style={{ height: '100%', width: '100%', borderRadius: '0.5rem' }}
             zoomControl={true}
           >
+            <ChandigarhFocus focus={focusChandigarh} />
             <TileLayer
               attribution={tileAttribution}
               url={tileUrl}
@@ -271,6 +330,42 @@ export default function TrafficHotspots() {
                 fillOpacity: 0
               }}
             />
+
+            {showOperations && operationalZones.map((zone) => {
+              const confidence = Number(zone.max_confidence || 0);
+              const color = zone.signal_count === 0 ? '#2563eb' : confidence >= 0.75 ? '#dc2626' : '#f97316';
+              return (
+                <Rectangle
+                  key={zone.id}
+                  bounds={zone.bounds}
+                  pathOptions={{ color, weight: 2, fillColor: color, fillOpacity: zone.signal_count ? 0.16 : 0.04 }}
+                >
+                  <Popup>
+                    <div className="font-mono text-xs">
+                      <strong>{zone.name}</strong><br />
+                      {t('Crawler signals')}: {zone.signal_count}<br />
+                      {zone.matched_aliases?.length ? `${t('Matched')}: ${zone.matched_aliases.join(', ')}` : t('No crawler signals in the last 24 hours')}
+                    </div>
+                  </Popup>
+                </Rectangle>
+              );
+            })}
+
+            {showOperations && personnel.map((officer) => (
+              <Marker key={officer.device_id} position={[officer.latitude, officer.longitude]} icon={createPersonnelIcon(officer.freshness)}>
+                <Popup>
+                  <div className="font-mono text-xs min-w-[170px]">
+                    <strong>{officer.display_name}</strong><br />
+                    <span>{officer.unit || t('Chandigarh Police')}</span><br />
+                    <span>{t('Status')}: {officer.freshness} · {officer.duty_status}</span><br />
+                    <span>{t('Updated')}: {officer.age_seconds}s ago</span>
+                    <button className="mt-2 w-full rounded bg-blue-600 px-2 py-1 text-white text-[10px]" onClick={() => setAlertMessage(t('Demo alert queued for {{name}}.', { name: officer.display_name }))}>
+                      {t('Alert Officer')}
+                    </button>
+                  </div>
+                </Popup>
+              </Marker>
+            ))}
 
             {places.map((spot) => {
               const tier = tierFor(spot.count, maxCount);
@@ -318,12 +413,21 @@ export default function TrafficHotspots() {
         </div>
       </div>
 
+      {alertMessage && (
+        <div className="mt-3 p-3 rounded border border-blue-500/40 bg-blue-500/10 text-xs font-mono text-foreground flex items-center justify-between">
+          <span>{alertMessage}</span>
+          <button onClick={() => setAlertMessage('')} className="text-primary ml-4">{t('Close')}</button>
+        </div>
+      )}
+
       <div className="mt-4 flex flex-wrap gap-4 text-sm font-mono text-xs">
         <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-red-500"></div> {t('Demo: Critical')}</div>
         <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-orange-500"></div> {t('Demo: High')}</div>
         <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-yellow-500"></div> {t('Demo: Medium')}</div>
         <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-slate-500"></div> {t('Demo: Low')}</div>
         <div className="flex items-center gap-2"><div className="w-3 h-3 bg-teal-400 rotate-45"></div> {t('Live Crawler Mentions')}</div>
+        <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-blue-600"></div> {t('Fresh Personnel')}</div>
+        <div className="flex items-center gap-2"><div className="w-3 h-3 rounded border border-orange-500"></div> {t('Operational Zone')}</div>
       </div>
     </div>
   );
