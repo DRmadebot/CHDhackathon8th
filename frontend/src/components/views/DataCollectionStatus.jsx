@@ -1176,7 +1176,7 @@ export default function DataCollectionStatus() {
                   </div>
                 </div>
 
-                <p className="text-xs text-slate-300 line-clamp-2 bg-background p-2.5 rounded border border-border font-sans">
+                <p className="text-xs text-black dark:text-slate-300 line-clamp-2 bg-background p-2.5 rounded border border-border font-sans">
                   {rec.cleaned_text}
                 </p>
               </div>
