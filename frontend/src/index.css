@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+
+    --card: 0 0% 96%;
+    --card-foreground: 0 0% 0%;
+
+    --popover: 0 0% 100%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+
+    --primary: 120 80% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 90%;
+    --secondary-foreground: 0 0% 0%;
+
+    --muted: 0 0% 96%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 120 80% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
+    --ring: 120 80% 40%;
+
+    --radius: 0rem;
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 84 100% 50%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 64%;
+
+    --accent: 84 100% 50%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 84 100% 50%;
+  }
+}
+
+@layer utilities {
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .bracket-border {
+    position: relative;
+    background: transparent;
+  }
+  .bracket-border::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background: 
+      linear-gradient(hsl(var(--border)), hsl(var(--border))) 0 0 / 12px 1px no-repeat,
+      linear-gradient(hsl(var(--border)), hsl(var(--border))) 0 0 / 1px 12px no-repeat,
+      linear-gradient(hsl(var(--border)), hsl(var(--border))) 100% 0 / 12px 1px no-repeat,
+      linear-gradient(hsl(var(--border)), hsl(var(--border))) 100% 0 / 1px 12px no-repeat,
+      linear-gradient(hsl(var(--border)), hsl(var(--border))) 0 100% / 12px 1px no-repeat,
+      linear-gradient(hsl(var(--border)), hsl(var(--border))) 0 100% / 1px 12px no-repeat,
+      linear-gradient(hsl(var(--border)), hsl(var(--border))) 100% 100% / 12px 1px no-repeat,
+      linear-gradient(hsl(var(--border)), hsl(var(--border))) 100% 100% / 1px 12px no-repeat;
+  }
+  .text-glow {
+    text-shadow: 0 0 15px hsl(var(--primary) / 0.5);
+  }
+  
+  .slow-pulse {
+    animation: slow-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes slow-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.5); }
+  }
+  
+  .leaflet-container {
+    background: transparent !important;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
