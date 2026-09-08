@@ -25,7 +25,6 @@ from . import config, dread_loader
 from .india_gazetteer import ALIASES, PLACES
 
 CACHE_PATH = os.path.join(config.CACHE_DIR, "geo_activity.json")
-CACHE_TTL_SECONDS = 6 * 60 * 60
 
 # Every recognizable name (canonical + aliases), longest first so e.g.
 # "New Delhi" matches before the bare "Delhi" inside it — findall()
@@ -113,10 +112,8 @@ def build_geo_activity(dread_dir: str = config.DREAD_DATA_DIR) -> dict:
 
 def get_cached_or_build_geo(force: bool = False) -> dict:
     if not force and os.path.exists(CACHE_PATH):
-        age = time.time() - os.path.getmtime(CACHE_PATH)
-        if age < CACHE_TTL_SECONDS:
-            with open(CACHE_PATH) as f:
-                return json.load(f)
+        with open(CACHE_PATH) as f:
+            return json.load(f)
 
     data = build_geo_activity()
     os.makedirs(config.CACHE_DIR, exist_ok=True)

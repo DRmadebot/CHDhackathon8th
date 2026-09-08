@@ -33,7 +33,6 @@ def _log(msg: str) -> None:
 
 
 CACHE_PATH = os.path.join(config.CACHE_DIR, "geo_activity.json")
-CACHE_TTL_SECONDS = 6 * 60 * 60
 # Bump this whenever build_geo_activity()'s output shape changes. A
 # cached file without a matching version (including old caches from
 # before this existed, which have none at all) is rebuilt regardless of
@@ -139,14 +138,12 @@ def build_geo_activity(data_paths: str | list[str] | None = None) -> dict:
 def get_cached_or_build_geo(force: bool = False) -> dict:
     if not force and os.path.exists(CACHE_PATH):
         try:
-            age = time.time() - os.path.getmtime(CACHE_PATH)
-            if age < CACHE_TTL_SECONDS:
-                with open(CACHE_PATH) as f:
-                    cached = json.load(f)
-                if cached.get("cache_schema_version") == CACHE_SCHEMA_VERSION:
-                    _log(f"serving cached result ({age:.0f}s old, schema v{CACHE_SCHEMA_VERSION}).")
-                    return cached
-                _log(f"cached file is schema v{cached.get('cache_schema_version')!r}, code expects v{CACHE_SCHEMA_VERSION} — ignoring stale cache and rebuilding.")
+            with open(CACHE_PATH) as f:
+                cached = json.load(f)
+            if cached.get("cache_schema_version") == CACHE_SCHEMA_VERSION:
+                _log(f"serving cached result (schema v{CACHE_SCHEMA_VERSION}).")
+                return cached
+            _log(f"cached file is schema v{cached.get('cache_schema_version')!r}, code expects v{CACHE_SCHEMA_VERSION} — ignoring stale cache and rebuilding.")
         except json.JSONDecodeError:
             # Truncated/corrupt file — e.g. the process was killed mid-write
             # on a previous run. Treat exactly like a stale/mismatched cache:

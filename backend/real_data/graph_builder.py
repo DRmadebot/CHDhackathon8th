@@ -29,7 +29,6 @@ from . import config, intelligence
 from .loader import RealDataLoader
 
 CACHE_PATH = os.path.join(config.CACHE_DIR, "network_real.json")
-CACHE_TTL_SECONDS = 6 * 60 * 60  # rebuild at most every 6h; data only changes when you drop in new files
 # Bump whenever build_real_network_data()'s output shape changes. See
 # the identical mechanism (and the bug it fixes) in geo_signals.py's
 # CACHE_SCHEMA_VERSION — a schema change without this bumped means a
@@ -292,14 +291,12 @@ def get_cached_or_build(force: bool = False) -> dict:
 
     if not force and os.path.exists(CACHE_PATH):
         try:
-            age = time.time() - os.path.getmtime(CACHE_PATH)
-            if age < CACHE_TTL_SECONDS:
-                with open(CACHE_PATH) as f:
-                    cached = json.load(f)
-                if cached.get("cache_schema_version") == CACHE_SCHEMA_VERSION:
-                    _log(f"serving cached result ({age:.0f}s old, schema v{CACHE_SCHEMA_VERSION}).")
-                    return cached
-                _log(f"cached file is schema v{cached.get('cache_schema_version')!r}, code expects v{CACHE_SCHEMA_VERSION} — ignoring stale cache and rebuilding.")
+            with open(CACHE_PATH) as f:
+                cached = json.load(f)
+            if cached.get("cache_schema_version") == CACHE_SCHEMA_VERSION:
+                _log(f"serving cached result (schema v{CACHE_SCHEMA_VERSION}).")
+                return cached
+            _log(f"cached file is schema v{cached.get('cache_schema_version')!r}, code expects v{CACHE_SCHEMA_VERSION} — ignoring stale cache and rebuilding.")
         except json.JSONDecodeError:
             _log("cache file exists but isn't valid JSON (likely a truncated write from an earlier crash) — ignoring it and rebuilding.")
 
@@ -319,7 +316,7 @@ def get_cached_or_build(force: bool = False) -> dict:
         _build_in_progress = True
 
     try:
-        _log("no fresh cache — building from scratch (this can take several minutes on the full dataset; run `python -m real_data.graph_builder` directly to watch progress).")
+        _log("no usable cache — building from scratch (this can take several minutes on the full dataset; run `python -m real_data.graph_builder` directly to watch progress).")
         data = build_real_network_data()
         os.makedirs(config.CACHE_DIR, exist_ok=True)
         with open(CACHE_PATH, "w") as f:
